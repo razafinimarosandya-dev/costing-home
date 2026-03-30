@@ -64,8 +64,8 @@
             <div class="hidden md:flex space-x-6 text-sm font-medium text-slate-400">
                 <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-link active pb-1">Dashboard</button>
                 <button onclick="switchTab('create-request')" id="nav-create-request" class="nav-link pb-1">Create Request</button>
-                <button onclick="switchTab('techpack')" id="nav-techpack" class="nav-link pb-1">Techpack</button>
-                <button onclick="switchTab('pattern')" id="nav-pattern" class="nav-link pb-1">Pattern</button>
+                <button onclick="redirectTo('https://teckpack-costing.vercel.app/')" id="nav-techpack" class="nav-link pb-1">Techpack</button>
+                <button onclick="redirectTo('https://pattern-costing-lbyc.vercel.app/')" id="nav-pattern" class="nav-link pb-1">Pattern</button>
                 <button onclick="switchTab('mkt-cards')" id="nav-mkt-cards" class="nav-link pb-1">MKT Cards</button>
                 <button onclick="switchTab('feasibility')" id="nav-feasibility" class="nav-link pb-1">Feasibility</button>
             </div>
@@ -318,7 +318,13 @@
     </main>
 
     <script>
-        /**
+       function redirectTo(url) {
+    if (!url) return;
+
+    window.location.href = url;
+}
+       
+       /**
          * Gestion de la navigation par onglets
          */
         function switchTab(tabId) {

@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,21 +9,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-dark: #0f172a;
-            --card-dark: #1e293b;
+            --bg-light: #f8fafc;
+            --card-light: #ffffff;
             --accent-blue: #3b82f6;
-            --text-gray: #94a3b8;
+            --text-muted: #64748b;
         }
 
         body {
-            background-color: var(--bg-dark);
-            color: white;
+            background-color: var(--bg-light);
+            color: #0f172a;
             font-family: 'Inter', sans-serif;
         }
 
         .glass-card {
-            background: rgba(30, 41, 59, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--card-light);
+            border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
             border-radius: 12px;
         }
 
@@ -43,40 +43,49 @@
         ::-webkit-scrollbar {
             width: 8px;
         }
+
         ::-webkit-scrollbar-track {
-            background: var(--bg-dark);
+            background: #f1f5f9;
         }
+
         ::-webkit-scrollbar-thumb {
-            background: #334155;
+            background: #cbd5e1;
             border-radius: 4px;
         }
     </style>
 </head>
+
 <body class="min-h-screen overflow-x-hidden">
 
     <!-- NAVIGATION BAR -->
-    <nav class="border-b border-slate-800 bg-slate-900 px-6 py-4 flex items-center justify-between sticky top-0 z-50">
+    <nav class="border-b border-slate-200 bg-white px-6 py-4 flex items-center justify-between sticky top-0 z-50">
         <div class="flex items-center space-x-8">
             <div class="flex items-center space-x-2 text-blue-500 font-bold text-xl">
                 <i class="fas fa-th-large"></i>
                 <span>GarmentCost</span>
             </div>
-            <div class="hidden md:flex space-x-6 text-sm font-medium text-slate-400">
-                <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-link active pb-1">Dashboard</button>
-                <button onclick="redirectTo('https://request-costing.vercel.app/')" class="nav-link pb-1">Create Request</button>
-                <button onclick="redirectTo('https://teckpack-costing.vercel.app/')" id="nav-techpack" class="nav-link pb-1">Techpack</button>
-                <button onclick="redirectTo('https://pattern-costing-lbyc.vercel.app/')" id="nav-pattern" class="nav-link pb-1">Pattern</button>
-                <button onclick="switchTab('mkt-cards')" id="nav-mkt-cards" class="nav-link pb-1">MKT Cards</button>
-                <button onclick="switchTab('feasibility')" id="nav-feasibility" class="nav-link pb-1">Feasibility</button>
+            <div class="hidden md:flex space-x-6 text-sm font-medium text-slate-500">
+                <button onclick="switchTab('dashboard')" id="nav-dashboard"
+                    class="nav-link active pb-1">Dashboard</button>
+                <button onclick="redirectTo('https://request-costing.vercel.app/')" class="nav-link pb-1">Request</button>
+                <button onclick="redirectTo('https://awaiting-meet.vercel.app/')" class="nav-link pb-1">Meeting</button>
+                <button onclick="redirectTo('https://teckpack-costing.vercel.app/')" id="nav-techpack"
+                    class="nav-link pb-1">Techpack</button>
+                <button onclick="redirectTo('https://pattern-costing-lbyc.vercel.app/')" id="nav-pattern"
+                    class="nav-link pb-1">Pattern</button>
+                <button onclick="redirectTo('#')" class="nav-link pb-1">Conso</button>
+                <button onclick="redirectTo('#')" class="nav-link pb-1">PRI</button>
+                <button onclick="redirectTo('#')" class="nav-link pb-1">ACC</button>
             </div>
         </div>
         <div class="flex items-center space-x-4">
             <div class="relative">
                 <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-500"></i>
-                <input type="text" placeholder="Search styles..." class="bg-slate-800 border-none rounded-md py-2 pl-10 pr-4 text-sm focus:ring-1 focus:ring-blue-500 w-64">
+                <input type="text" placeholder="Search styles..."
+                    class="bg-slate-50 border-none rounded-md py-2 pl-10 pr-4 text-sm focus:ring-1 focus:ring-blue-500 w-64">
             </div>
-            <i class="far fa-bell text-slate-400 cursor-pointer"></i>
-            <div class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center border border-slate-600">
+            <i class="far fa-bell text-slate-500 cursor-pointer"></i>
+            <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">
                 <i class="far fa-user text-xs"></i>
             </div>
         </div>
@@ -84,28 +93,28 @@
 
     <!-- MAIN CONTENT AREA -->
     <main class="p-6 max-w-[1600px] mx-auto">
-        
+
         <!-- DASHBOARD TAB (The view from your image) -->
         <section id="tab-dashboard" class="tab-content grid grid-cols-12 gap-6">
-            
+
             <!-- Left Side: Stats & Table -->
             <div class="col-span-12 lg:col-span-9 space-y-6">
-                
+
                 <!-- Top Stats Cards -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="glass-card p-6">
                         <div class="flex justify-between items-start mb-4">
-                            <span class="text-slate-400 text-sm">Daily Quota</span>
+                            <span class="text-slate-500 text-sm">Daily Quota</span>
                             <i class="fas fa-chart-bar text-blue-500"></i>
                         </div>
                         <div class="text-3xl font-bold">15 / 15</div>
-                        <div class="w-full bg-slate-700 h-1.5 mt-4 rounded-full overflow-hidden">
+                        <div class="w-full bg-slate-100 h-1.5 mt-4 rounded-full overflow-hidden">
                             <div class="bg-blue-500 h-full w-full"></div>
                         </div>
                     </div>
                     <div class="glass-card p-6">
                         <div class="flex justify-between items-start mb-4">
-                            <span class="text-slate-400 text-sm">Open Requests</span>
+                            <span class="text-slate-500 text-sm">Open Requests</span>
                             <i class="fas fa-clipboard-list text-yellow-500"></i>
                         </div>
                         <div class="text-3xl font-bold">42</div>
@@ -113,7 +122,7 @@
                     </div>
                     <div class="glass-card p-6">
                         <div class="flex justify-between items-start mb-4">
-                            <span class="text-slate-400 text-sm">Pending Feasibility</span>
+                            <span class="text-slate-500 text-sm">Pending Feasibility</span>
                             <i class="fas fa-check-circle text-green-500"></i>
                         </div>
                         <div class="text-3xl font-bold">12</div>
@@ -125,23 +134,39 @@
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
                     <div class="glass-card p-4 flex items-center space-x-3">
                         <div class="bg-blue-500/10 p-2 rounded text-blue-500"><i class="fas fa-file-alt"></i></div>
-                        <div><div class="text-xs text-slate-500">TOTAL</div><div class="font-bold">128</div></div>
+                        <div>
+                            <div class="text-xs text-slate-500">TOTAL</div>
+                            <div class="font-bold">128</div>
+                        </div>
                     </div>
                     <div class="glass-card p-4 flex items-center space-x-3">
-                        <div class="bg-slate-700 p-2 rounded text-slate-400"><i class="fas fa-box"></i></div>
-                        <div><div class="text-xs text-slate-500">TECHPACKS</div><div class="font-bold">14</div></div>
+                        <div class="bg-slate-100 p-2 rounded text-slate-500"><i class="fas fa-box"></i></div>
+                        <div>
+                            <div class="text-xs text-slate-500">TECHPACKS</div>
+                            <div class="font-bold">14</div>
+                        </div>
                     </div>
                     <div class="glass-card p-4 flex items-center space-x-3">
-                        <div class="bg-slate-700 p-2 rounded text-slate-400"><i class="fas fa-tasks"></i></div>
-                        <div><div class="text-xs text-slate-500">FEASIBILITY</div><div class="font-bold">08</div></div>
+                        <div class="bg-slate-100 p-2 rounded text-slate-500"><i class="fas fa-tasks"></i></div>
+                        <div>
+                            <div class="text-xs text-slate-500">FEASIBILITY</div>
+                            <div class="font-bold">08</div>
+                        </div>
                     </div>
                     <div class="glass-card p-4 flex items-center space-x-3">
-                        <div class="bg-slate-700 p-2 rounded text-slate-400"><i class="fas fa-id-card"></i></div>
-                        <div><div class="text-xs text-slate-500">MKT CARDS</div><div class="font-bold">10</div></div>
+                        <div class="bg-slate-100 p-2 rounded text-slate-500"><i class="fas fa-id-card"></i></div>
+                        <div>
+                            <div class="text-xs text-slate-500">MKT CARDS</div>
+                            <div class="font-bold">10</div>
+                        </div>
                     </div>
                     <div class="glass-card p-4 flex items-center space-x-3">
-                        <div class="bg-slate-700 p-2 rounded text-slate-400"><i class="fas fa-project-diagram"></i></div>
-                        <div><div class="text-xs text-slate-500">PRIPENDING</div><div class="font-bold">05</div></div>
+                        <div class="bg-slate-100 p-2 rounded text-slate-500"><i class="fas fa-project-diagram"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs text-slate-500">PRIPENDING</div>
+                            <div class="font-bold">05</div>
+                        </div>
                     </div>
                 </div>
 
@@ -150,30 +175,35 @@
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-lg font-semibold">My Pending Items</h2>
                         <div class="flex space-x-2">
-                            <button class="bg-slate-800 px-3 py-1.5 rounded text-xs border border-slate-700"><i class="fas fa-filter mr-2"></i>Filter</button>
-                            <button class="bg-slate-800 px-3 py-1.5 rounded text-xs border border-slate-700"><i class="fas fa-sort mr-2"></i>Sort</button>
+                            <button class="bg-slate-50 px-3 py-1.5 rounded text-xs border border-slate-300"><i
+                                    class="fas fa-filter mr-2"></i>Filter</button>
+                            <button class="bg-slate-50 px-3 py-1.5 rounded text-xs border border-slate-300"><i
+                                    class="fas fa-sort mr-2"></i>Sort</button>
                         </div>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left text-sm">
                             <thead>
-                                <tr class="text-slate-500 border-b border-slate-800">
-                                    <th class="pb-4 font-medium uppercase text-[10px] tracking-wider">Style Name / Code</th>
+                                <tr class="text-slate-500 border-b border-slate-200">
+                                    <th class="pb-4 font-medium uppercase text-[10px] tracking-wider">Style Name / Code
+                                    </th>
                                     <th class="pb-4 font-medium uppercase text-[10px] tracking-wider">Customer</th>
                                     <th class="pb-4 font-medium uppercase text-[10px] tracking-wider">Due Date</th>
                                     <th class="pb-4 font-medium uppercase text-[10px] tracking-wider">Status</th>
-                                    <th class="pb-4 font-medium uppercase text-[10px] tracking-wider text-right">Actions</th>
+                                    <th class="pb-4 font-medium uppercase text-[10px] tracking-wider text-right">Actions
+                                    </th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-slate-800">
+                            <tbody class="divide-y divide-slate-200">
                                 <tr>
                                     <td class="py-4">
                                         <div class="font-medium">Summer Linen Blazer</div>
                                         <div class="text-xs text-slate-500">LB-2024-001</div>
                                     </td>
-                                    <td class="py-4 text-slate-300">Nordstrom</td>
+                                    <td class="py-4 text-slate-700">Nordstrom</td>
                                     <td class="py-4 text-rose-500">Oct 24, 2023 (Overdue)</td>
-                                    <td class="py-4"><span class="text-[10px] font-bold text-orange-400">COSTING IN PROGRESS</span></td>
+                                    <td class="py-4"><span class="text-[10px] font-bold text-orange-400">COSTING IN
+                                            PROGRESS</span></td>
                                     <td class="py-4 text-right text-blue-500 cursor-pointer">Edit</td>
                                 </tr>
                                 <tr>
@@ -181,9 +211,10 @@
                                         <div class="font-medium">Vintage Denim Jacket</div>
                                         <div class="text-xs text-slate-500">DJ-982</div>
                                     </td>
-                                    <td class="py-4 text-slate-300">Urban Outfitters</td>
+                                    <td class="py-4 text-slate-700">Urban Outfitters</td>
                                     <td class="py-4 text-yellow-500">Due Today</td>
-                                    <td class="py-4"><span class="text-[10px] font-bold text-blue-400">TECHPACK PENDING</span></td>
+                                    <td class="py-4"><span class="text-[10px] font-bold text-blue-400">TECHPACK
+                                            PENDING</span></td>
                                     <td class="py-4 text-right text-blue-500 cursor-pointer">Edit</td>
                                 </tr>
                                 <tr>
@@ -191,9 +222,10 @@
                                         <div class="font-medium">Silk Evening Gown</div>
                                         <div class="text-xs text-slate-500">SG-005</div>
                                     </td>
-                                    <td class="py-4 text-slate-300">Anthropologie</td>
-                                    <td class="py-4 text-slate-400">Oct 30, 2023</td>
-                                    <td class="py-4"><span class="text-[10px] font-bold text-emerald-400">FEASIBILITY</span></td>
+                                    <td class="py-4 text-slate-700">Anthropologie</td>
+                                    <td class="py-4 text-slate-500">Oct 30, 2023</td>
+                                    <td class="py-4"><span
+                                            class="text-[10px] font-bold text-emerald-400">FEASIBILITY</span></td>
                                     <td class="py-4 text-right text-blue-500 cursor-pointer">Edit</td>
                                 </tr>
                                 <tr>
@@ -201,9 +233,10 @@
                                         <div class="font-medium">Activewear Leggings</div>
                                         <div class="text-xs text-slate-500">AL-2024</div>
                                     </td>
-                                    <td class="py-4 text-slate-300">Lululemon</td>
-                                    <td class="py-4 text-slate-400">Nov 02, 2023</td>
-                                    <td class="py-4"><span class="text-[10px] font-bold text-slate-500">AWAITING PATTERN</span></td>
+                                    <td class="py-4 text-slate-700">Lululemon</td>
+                                    <td class="py-4 text-slate-500">Nov 02, 2023</td>
+                                    <td class="py-4"><span class="text-[10px] font-bold text-slate-500">AWAITING
+                                            PATTERN</span></td>
                                     <td class="py-4 text-right text-blue-500 cursor-pointer">Edit</td>
                                 </tr>
                             </tbody>
@@ -221,16 +254,16 @@
                             <i class="fas fa-exclamation-triangle text-orange-500"></i>
                             <span>Overdue Alerts</span>
                         </div>
-                        <span class="bg-rose-500 text-white text-[10px] px-2 py-0.5 rounded-full">3</span>
+                        <span class="bg-rose-500 text-slate-900 text-[10px] px-2 py-0.5 rounded-full">3</span>
                     </div>
                     <div class="space-y-4">
                         <div class="border-l-4 border-rose-500 bg-rose-500/5 p-3 rounded-r">
                             <div class="text-xs font-bold">Fabric Cost Missing</div>
-                            <div class="text-[11px] text-slate-400 mt-1">Summer Linen Blazer is 2 days overdue.</div>
+                            <div class="text-[11px] text-slate-500 mt-1">Summer Linen Blazer is 2 days overdue.</div>
                         </div>
                         <div class="border-l-4 border-orange-500 bg-orange-500/5 p-3 rounded-r">
                             <div class="text-xs font-bold">MKT Card Approval</div>
-                            <div class="text-[11px] text-slate-400 mt-1">Urban Denim series needs signature.</div>
+                            <div class="text-[11px] text-slate-500 mt-1">Urban Denim series needs signature.</div>
                         </div>
                     </div>
                 </div>
@@ -243,8 +276,8 @@
                     </div>
                     <div class="space-y-4">
                         <div class="flex space-x-3 items-center">
-                            <div class="bg-slate-800 p-2 rounded text-center min-w-[50px]">
-                                <div class="text-[9px] uppercase text-slate-400">OCT</div>
+                            <div class="bg-slate-50 p-2 rounded text-center min-w-[50px]">
+                                <div class="text-[9px] uppercase text-slate-500">OCT</div>
                                 <div class="font-bold">28</div>
                             </div>
                             <div>
@@ -253,8 +286,8 @@
                             </div>
                         </div>
                         <div class="flex space-x-3 items-center">
-                            <div class="bg-slate-800 p-2 rounded text-center min-w-[50px]">
-                                <div class="text-[9px] uppercase text-slate-400">OCT</div>
+                            <div class="bg-slate-50 p-2 rounded text-center min-w-[50px]">
+                                <div class="text-[9px] uppercase text-slate-500">OCT</div>
                                 <div class="font-bold">30</div>
                             </div>
                             <div>
@@ -266,7 +299,8 @@
                 </div>
 
                 <!-- Action Button -->
-                <button class="w-full bg-blue-600 hover:bg-blue-700 transition-colors py-3 rounded-lg flex items-center justify-center space-x-2 font-semibold">
+                <button
+                    class="w-full bg-blue-600 hover:bg-blue-700 transition-colors py-3 rounded-lg flex items-center justify-center space-x-2 font-semibold">
                     <i class="fas fa-plus"></i>
                     <span>New Costing Request</span>
                 </button>
@@ -274,12 +308,12 @@
         </section>
 
         <!-- COLLES VOS PAGES ICI -->
-        
+
         <section id="tab-create-request" class="tab-content hidden">
             <!-- COPIEZ VOTRE CODE HTML POUR 'CREATE REQUEST' ICI -->
             <div class="glass-card p-10 text-center">
                 <h2 class="text-2xl font-bold mb-4">Create New Request</h2>
-                <p class="text-slate-400">Espace réservé pour votre module de création de requête.</p>
+                <p class="text-slate-500">Espace réservé pour votre module de création de requête.</p>
             </div>
         </section>
 
@@ -287,7 +321,7 @@
             <!-- COPIEZ VOTRE CODE HTML POUR 'TECHPACK' ICI -->
             <div class="glass-card p-10 text-center">
                 <h2 class="text-2xl font-bold mb-4">Techpack Management</h2>
-                <p class="text-slate-400">Espace réservé pour votre module Techpack.</p>
+                <p class="text-slate-500">Espace réservé pour votre module Techpack.</p>
             </div>
         </section>
 
@@ -295,7 +329,7 @@
             <!-- COPIEZ VOTRE CODE HTML POUR 'PATTERN' ICI -->
             <div class="glass-card p-10 text-center">
                 <h2 class="text-2xl font-bold mb-4">Pattern Design</h2>
-                <p class="text-slate-400">Espace réservé pour votre module Pattern.</p>
+                <p class="text-slate-500">Espace réservé pour votre module Pattern.</p>
             </div>
         </section>
 
@@ -303,7 +337,7 @@
             <!-- COPIEZ VOTRE CODE HTML POUR 'MKT CARDS' ICI -->
             <div class="glass-card p-10 text-center">
                 <h2 class="text-2xl font-bold mb-4">MKT Cards Approval</h2>
-                <p class="text-slate-400">Espace réservé pour votre module MKT Cards.</p>
+                <p class="text-slate-500">Espace réservé pour votre module MKT Cards.</p>
             </div>
         </section>
 
@@ -311,22 +345,22 @@
             <!-- COPIEZ VOTRE CODE HTML POUR 'FEASIBILITY' ICI -->
             <div class="glass-card p-10 text-center">
                 <h2 class="text-2xl font-bold mb-4">Feasibility Review</h2>
-                <p class="text-slate-400">Espace réservé pour votre module Feasibility.</p>
+                <p class="text-slate-500">Espace réservé pour votre module Feasibility.</p>
             </div>
         </section>
 
     </main>
 
     <script>
-       function redirectTo(url) {
-    if (!url) return;
+        function redirectTo(url) {
+            if (!url) return;
 
-    window.location.href = url;
-}
-       
-       /**
-         * Gestion de la navigation par onglets
-         */
+            window.location.href = url;
+        }
+
+        /**
+          * Gestion de la navigation par onglets
+          */
         function switchTab(tabId) {
             // Masquer tout le contenu
             document.querySelectorAll('.tab-content').forEach(tab => {
@@ -340,7 +374,7 @@
 
             // Afficher le contenu sélectionné
             document.getElementById('tab-' + tabId).classList.remove('hidden');
-            
+
             // Activer le lien de navigation correspondant
             document.getElementById('nav-' + tabId).classList.add('active');
 
@@ -355,14 +389,14 @@
          */
         function refreshDashboardData() {
             console.log("Tentative de chargement des données via Apps Script...");
-            
+
             if (typeof google !== 'undefined' && google.script) {
                 google.script.run
-                    .withSuccessHandler(function(data) {
+                    .withSuccessHandler(function (data) {
                         // Mettre à jour les éléments du DOM avec les données reçues
                         console.log("Données reçues :", data);
                     })
-                    .withFailureHandler(function(err) {
+                    .withFailureHandler(function (err) {
                         console.error("Erreur Apps Script:", err);
                     })
                     .getDashboardData(); // Nom de votre fonction .gs
@@ -370,10 +404,12 @@
         }
 
         // Initialisation
-        window.onload = function() {
+        window.onload = function () {
             console.log("Tableau de bord chargé.");
             // Vous pouvez charger les données initiales ici
         };
     </script>
 </body>
+
 </html>
+

@@ -23,7 +23,8 @@
 
         .glass-card {
             background: var(--card-light);
-            border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
             border-radius: 12px;
         }
 
@@ -65,9 +66,9 @@
                 <span>GarmentCost</span>
             </div>
             <div class="hidden md:flex space-x-6 text-sm font-medium text-slate-500">
-                <button onclick="switchTab('dashboard')" id="nav-dashboard"
-                    class="nav-link active pb-1">Home</button>
-                <button onclick="redirectTo('https://request-costing.vercel.app/')" class="nav-link pb-1">Request</button>
+                <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-link active pb-1">Home</button>
+                <button onclick="redirectTo('https://request-costing.vercel.app/')"
+                    class="nav-link pb-1">Request</button>
                 <button onclick="redirectTo('https://awaiting-meet.vercel.app/')" class="nav-link pb-1">Meeting</button>
                 <button onclick="redirectTo('https://techpack-costing1.vercel.app/')" id="nav-techpack"
                     class="nav-link pb-1">Techpack</button>
@@ -76,7 +77,8 @@
                 <button onclick="redirectTo('https://conso-costing.vercel.app/')" class="nav-link pb-1">Conso</button>
                 <button onclick="redirectTo('https://pri-conso.vercel.app/')" class="nav-link pb-1">PRI</button>
                 <button onclick="redirectTo('https://acc-costing.vercel.app/')" class="nav-link pb-1">ACC</button>
-                 <button onclick="redirectTo('https://feastibility-costing.vercel.app/')" class="nav-link pb-1">Feasibility</button>
+                <button onclick="redirectTo('https://feastibility-costing.vercel.app/')"
+                    class="nav-link pb-1">Feasibility</button>
             </div>
         </div>
         <div class="flex items-center space-x-4">
@@ -108,9 +110,9 @@
                             <span class="text-slate-500 text-sm">Daily Quota</span>
                             <i class="fas fa-chart-bar text-blue-500"></i>
                         </div>
-                        <div class="text-3xl font-bold">15 / 15</div>
+                        <div id="dashboardQuotaText" class="text-3xl font-bold">-- / --</div>
                         <div class="w-full bg-slate-100 h-1.5 mt-4 rounded-full overflow-hidden">
-                            <div class="bg-blue-500 h-full w-full"></div>
+                            <div id="dashboardQuotaBar" class="bg-blue-500 h-full w-0 transition-all duration-500"></div>
                         </div>
                     </div>
                     <div class="glass-card p-6">
@@ -300,8 +302,8 @@
                 </div>
 
                 <!-- Action Button -->
-                <button
-                    class="w-full bg-blue-600 hover:bg-blue-700 transition-colors py-3 rounded-lg flex items-center justify-center space-x-2 font-semibold">
+                <button onclick="redirectTo('https://request-costing.vercel.app/')"
+                    class="w-full bg-blue-600 hover:bg-blue-700 transition-colors py-3 rounded-lg flex items-center justify-center space-x-2 font-semibold text-white">
                     <i class="fas fa-plus"></i>
                     <span>New Costing Request</span>
                 </button>
@@ -404,13 +406,53 @@
             }
         }
 
+        function syncDailyQuota() {
+            const quotaData = localStorage.getItem('garmentcost_daily_quota');
+            const textEl = document.getElementById('dashboardQuotaText');
+            const barEl = document.getElementById('dashboardQuotaBar');
+            
+            if (!quotaData) {
+                if (textEl) textEl.textContent = "0 / 15";
+                if (barEl) barEl.style.width = "0%";
+                return;
+            }
+
+            try {
+                const { used, total, date } = JSON.parse(quotaData);
+                const today = new Date().toISOString().split('T')[0];
+
+                if (date !== today) {
+                    if (textEl) textEl.textContent = `0 / ${total || 15}`;
+                    if (barEl) barEl.style.width = "0%";
+                    return;
+                }
+
+                if (textEl) textEl.textContent = `${used} / ${total}`;
+                if (barEl) {
+                    const pct = Math.min((used / total) * 100, 100);
+                    barEl.style.width = pct + "%";
+                    
+                    // Optional color feedback matching feasibility.html
+                    if (pct >= 100) barEl.className = "bg-red-500 h-full transition-all duration-500";
+                    else if (pct >= 80) barEl.className = "bg-amber-500 h-full transition-all duration-500";
+                    else barEl.className = "bg-blue-500 h-full transition-all duration-500";
+                }
+            } catch (e) {
+                console.error("Quota sync error:", e);
+            }
+        }
+
         // Initialisation
         window.onload = function () {
             console.log("Tableau de bord chargé.");
-            // Vous pouvez charger les données initiales ici
+            syncDailyQuota();
+            
+            // Listen for changes in other tabs (e.g. Feasibility)
+            window.addEventListener('storage', (e) => {
+                if (e.key === 'garmentcost_daily_quota') syncDailyQuota();
+            });
         };
     </script>
 </body>
 
 </html>
-

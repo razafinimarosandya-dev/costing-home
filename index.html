@@ -121,7 +121,7 @@
                             <span class="text-slate-500 text-sm">Open Requests</span>
                             <i class="fas fa-clipboard-list text-yellow-500"></i>
                         </div>
-                        <div class="text-3xl font-bold">42</div>
+                        <div id="dashboardOpenRequests" class="text-3xl font-bold">--</div>
                         <span class="text-xs text-slate-500">Total active costing tasks</span>
                     </div>
                     <div class="glass-card p-6">
@@ -129,7 +129,7 @@
                             <span class="text-slate-500 text-sm">Pending Feasibility</span>
                             <i class="fas fa-check-circle text-green-500"></i>
                         </div>
-                        <div class="text-3xl font-bold">12</div>
+                        <div id="dashboardPendingFeasibility" class="text-3xl font-bold">--</div>
                         <span class="text-xs text-slate-500">Ready for review</span>
                     </div>
                 </div>
@@ -395,13 +395,13 @@
          */
         function refreshDashboardData() {
             console.log("[DEBUG] Tentative de rafraîchissement des données (Mode Hybride JSONP)...");
-
+            
             // 1. Toujours tenter via Apps Script Library si dispo (Dashboard intégré)
             if (typeof google !== 'undefined' && google.script) {
                 google.script.run
                     .withSuccessHandler(function (data) {
                         console.log("[DEBUG] Réponse serveur (GAS) reçue :", data);
-                        if (data && data.quota !== undefined) syncDailyQuota(data.quota);
+                        updateDashboardUI(data);
                     })
                     .withFailureHandler(function (err) {
                         console.error("[DEBUG] ÉCHEC Apps Script :", err);
@@ -413,7 +413,7 @@
                 const callbackName = "cb_" + Date.now();
                 window[callbackName] = function (data) {
                     console.log("[DEBUG] Réponse serveur (JSONP) reçue :", data);
-                    if (data && data.quota !== undefined) syncDailyQuota(data.quota);
+                    updateDashboardUI(data);
                     delete window[callbackName];
                     const scriptTag = document.getElementById(callbackName);
                     if (scriptTag) scriptTag.remove();
@@ -423,6 +423,28 @@
                 script.id = callbackName;
                 script.src = APPS_SCRIPT_URL + "?action=getDashboardStats&callback=" + callbackName;
                 document.body.appendChild(script);
+            }
+        }
+
+        /**
+         * Centralized UI Update for Dashboard stats
+         */
+        function updateDashboardUI(data) {
+            if (!data) return;
+            
+            // Quota
+            if (data.quota !== undefined) syncDailyQuota(data.quota);
+            
+            // Open Requests
+            if (data.openRequests !== undefined) {
+                const openEl = document.getElementById('dashboardOpenRequests');
+                if (openEl) openEl.textContent = data.openRequests;
+            }
+            
+            // Pending Feasibility
+            if (data.pendingFeasibility !== undefined) {
+                const pendEl = document.getElementById('dashboardPendingFeasibility');
+                if (pendEl) pendEl.textContent = data.pendingFeasibility;
             }
         }
 

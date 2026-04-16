@@ -391,21 +391,27 @@
          * Fetches live data from Google Apps Script, including the shared Daily Quota.
          */
         function refreshDashboardData() {
+            console.log("[DEBUG] Tentative de rafraîchissement des données depuis le serveur...");
             if (typeof google !== 'undefined' && google.script) {
                 google.script.run
                     .withSuccessHandler(function (data) {
-                        console.log("Dashboard data synced:", data);
+                        console.log("[DEBUG] Réponse serveur reçue :", data);
                         if (data && data.quota !== undefined) {
-                            // Update Quota UI with server value
+                            console.log("[DEBUG] Mise à jour du quota via serveur :", data.quota);
                             syncDailyQuota(data.quota);
+                        } else {
+                            console.warn("[DEBUG] Données de quota manquantes dans la réponse.");
                         }
-                        
-                        // Set other stats here if returned (e.g. data.openRequests)
+                        if (data && data.today) {
+                            console.log("[DEBUG] Date serveur détectée :", data.today);
+                        }
                     })
                     .withFailureHandler(function (err) {
-                        console.error("Apps Script Error:", err);
+                        console.error("[DEBUG] ÉCHEC de l'appel Apps Script :", err);
                     })
                     .getDashboardData();
+            } else {
+                console.warn("[DEBUG] 'google.script.run' n'est pas disponible. Le Dashboard tourne probablement en local ou n'est pas intégré à l'Apps Script.");
             }
         }
 

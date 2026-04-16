@@ -388,57 +388,60 @@
         }
 
         /**
-         * Exemple d'intégration avec Google Apps Script
+         * Fetches live data from Google Apps Script, including the shared Daily Quota.
          */
         function refreshDashboardData() {
-            console.log("Tentative de chargement des données via Apps Script...");
-
             if (typeof google !== 'undefined' && google.script) {
                 google.script.run
                     .withSuccessHandler(function (data) {
-                        // Mettre à jour les éléments du DOM avec les données reçues
-                        console.log("Données reçues :", data);
+                        console.log("Dashboard data synced:", data);
+                        if (data && data.quota !== undefined) {
+                            // Update Quota UI with server value
+                            syncDailyQuota(data.quota);
+                        }
+                        
+                        // Set other stats here if returned (e.g. data.openRequests)
                     })
                     .withFailureHandler(function (err) {
-                        console.error("Erreur Apps Script:", err);
+                        console.error("Apps Script Error:", err);
                     })
-                    .getDashboardData(); // Nom de votre fonction .gs
+                    .getDashboardData();
             }
         }
 
-        function syncDailyQuota() {
-            const quotaData = localStorage.getItem('garmentcost_daily_quota');
+        /**
+         * Updates the Quota UI. 
+         * @param {number} serverUsed - Optional: The live count from the server.
+         */
+        function syncDailyQuota(serverUsed) {
             const textEl = document.getElementById('dashboardQuotaText');
             const barEl = document.getElementById('dashboardQuotaBar');
+            const total = 15; // Standard daily limit
+
+            let used = 0;
             
-            if (!quotaData) {
-                if (textEl) textEl.textContent = "0 / 15";
-                if (barEl) barEl.style.width = "0%";
-                return;
+            if (serverUsed !== undefined) {
+                // Use the fresh value from server
+                used = serverUsed;
+            } else {
+                // Initial load from local fallback
+                const quotaData = localStorage.getItem('garmentcost_daily_quota');
+                if (quotaData) {
+                    try {
+                        const parsed = JSON.parse(quotaData);
+                        const today = new Date().toISOString().split('T')[0];
+                        if (parsed.date === today) used = parsed.used;
+                    } catch (e) {}
+                }
             }
-
-            try {
-                const { used, total, date } = JSON.parse(quotaData);
-                const today = new Date().toISOString().split('T')[0];
-
-                if (date !== today) {
-                    if (textEl) textEl.textContent = `0 / ${total || 15}`;
-                    if (barEl) barEl.style.width = "0%";
-                    return;
-                }
-
-                if (textEl) textEl.textContent = `${used} / ${total}`;
-                if (barEl) {
-                    const pct = Math.min((used / total) * 100, 100);
-                    barEl.style.width = pct + "%";
-                    
-                    // Optional color feedback matching feasibility.html
-                    if (pct >= 100) barEl.className = "bg-red-500 h-full transition-all duration-500";
-                    else if (pct >= 80) barEl.className = "bg-amber-500 h-full transition-all duration-500";
-                    else barEl.className = "bg-blue-500 h-full transition-all duration-500";
-                }
-            } catch (e) {
-                console.error("Quota sync error:", e);
+            
+            if (textEl) textEl.textContent = `${used} / ${total}`;
+            if (barEl) {
+                const pct = Math.min((used / total) * 100, 100);
+                barEl.style.width = pct + "%";
+                if (pct >= 100) barEl.className = "bg-red-500 h-full transition-all duration-500";
+                else if (pct >= 80) barEl.className = "bg-amber-500 h-full transition-all duration-500";
+                else barEl.className = "bg-blue-500 h-full transition-all duration-500";
             }
         }
 
@@ -446,10 +449,19 @@
         window.onload = function () {
             console.log("Tableau de bord chargé.");
             syncDailyQuota();
+            refreshDashboardData();
+            
+            // Periodic refresh every 2 minutes for multi-user sync
+            setInterval(refreshDashboardData, 120000);
             
             // Listen for changes in other tabs (e.g. Feasibility)
             window.addEventListener('storage', (e) => {
-                if (e.key === 'garmentcost_daily_quota') syncDailyQuota();
+                if (e.key === 'garmentcost_daily_quota') {
+                    try {
+                        const parsed = JSON.parse(e.newValue);
+                        syncDailyQuota(parsed.used);
+                    } catch(ex) {}
+                }
             });
         };
     </script>

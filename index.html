@@ -112,7 +112,8 @@
                         </div>
                         <div id="dashboardQuotaText" class="text-3xl font-bold">-- / --</div>
                         <div class="w-full bg-slate-100 h-1.5 mt-4 rounded-full overflow-hidden">
-                            <div id="dashboardQuotaBar" class="bg-blue-500 h-full w-0 transition-all duration-500"></div>
+                            <div id="dashboardQuotaBar" class="bg-blue-500 h-full w-0 transition-all duration-500">
+                            </div>
                         </div>
                     </div>
                     <div class="glass-card p-6">
@@ -394,7 +395,7 @@
          */
         function refreshDashboardData() {
             console.log("[DEBUG] Tentative de rafraîchissement des données (Mode Hybride JSONP)...");
-            
+
             // 1. Toujours tenter via Apps Script Library si dispo (Dashboard intégré)
             if (typeof google !== 'undefined' && google.script) {
                 google.script.run
@@ -410,7 +411,7 @@
                 // 2. Fallback JSONP pour Dashboard hébergé sur lien externe (Vercel)
                 console.log("[DEBUG] Mode externe détecté. Utilisation de JSONP.");
                 const callbackName = "cb_" + Date.now();
-                window[callbackName] = function(data) {
+                window[callbackName] = function (data) {
                     console.log("[DEBUG] Réponse serveur (JSONP) reçue :", data);
                     if (data && data.quota !== undefined) syncDailyQuota(data.quota);
                     delete window[callbackName];
@@ -435,7 +436,7 @@
             const total = 15; // Standard daily limit
 
             let used = 0;
-            
+
             if (serverUsed !== undefined) {
                 // Use the fresh value from server
                 used = serverUsed;
@@ -447,10 +448,10 @@
                         const parsed = JSON.parse(quotaData);
                         const today = new Date().toISOString().split('T')[0];
                         if (parsed.date === today) used = parsed.used;
-                    } catch (e) {}
+                    } catch (e) { }
                 }
             }
-            
+
             if (textEl) textEl.textContent = `${used} / ${total}`;
             if (barEl) {
                 const pct = Math.min((used / total) * 100, 100);
@@ -466,17 +467,17 @@
             console.log("Tableau de bord chargé.");
             syncDailyQuota();
             refreshDashboardData();
-            
-            // Periodic refresh every 2 minutes for multi-user sync
-            setInterval(refreshDashboardData, 120000);
-            
+
+            // Periodic refresh every 30 seconds for faster multi-user sync
+            setInterval(refreshDashboardData, 30000);
+
             // Listen for changes in other tabs (e.g. Feasibility)
             window.addEventListener('storage', (e) => {
                 if (e.key === 'garmentcost_daily_quota') {
                     try {
                         const parsed = JSON.parse(e.newValue);
                         syncDailyQuota(parsed.used);
-                    } catch(ex) {}
+                    } catch (ex) { }
                 }
             });
         };

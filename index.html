@@ -138,28 +138,28 @@
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
                     <div class="glass-card p-4 flex items-center space-x-3">
                         <div class="bg-blue-500/10 p-2 rounded text-blue-500"><i class="fas fa-file-alt"></i></div>
-                        <div>
+                        <div class="flex-1 text-center">
                             <div class="text-xs text-slate-500">TOTAL Completed</div>
                             <div id="dashboardTotalComplete" class="font-bold">--</div>
                         </div>
                     </div>
                     <div class="glass-card p-4 flex items-center space-x-3">
                         <div class="bg-slate-100 p-2 rounded text-slate-500"><i class="fas fa-box"></i></div>
-                        <div>
+                        <div class="flex-1 text-center">
                             <div class="text-xs text-slate-500">TECHPACKS</div>
                             <div id="dashboardTechpacks" class="font-bold">--</div>
                         </div>
                     </div>
                     <div class="glass-card p-4 flex items-center space-x-3">
                         <div class="bg-slate-100 p-2 rounded text-slate-500"><i class="fas fa-tasks"></i></div>
-                        <div>
+                        <div class="flex-1 text-center">
                             <div class="text-xs text-slate-500">FEASIBILITY</div>
                             <div id="dashboardFeasibilitySub" class="font-bold">--</div>
                         </div>
                     </div>
                     <div class="glass-card p-4 flex items-center space-x-3">
                         <div class="bg-slate-100 p-2 rounded text-slate-500"><i class="fas fa-id-card"></i></div>
-                        <div>
+                        <div class="flex-1 text-center">
                             <div class="text-xs text-slate-500">ACC Completed</div>
                             <div id="dashboardAccPending" class="font-bold">--</div>
                         </div>
@@ -167,7 +167,7 @@
                     <div class="glass-card p-4 flex items-center space-x-3">
                         <div class="bg-slate-100 p-2 rounded text-slate-500"><i class="fas fa-project-diagram"></i>
                         </div>
-                        <div>
+                        <div class="flex-1 text-center">
                             <div class="text-xs text-slate-500">PRI Completed</div>
                             <div id="dashboardPriPending" class="font-bold">--</div>
                         </div>
@@ -189,7 +189,7 @@
                         <table class="w-full text-left text-sm">
                             <thead>
                                 <tr class="text-slate-500 border-b border-slate-200">
-                                    <th class="pb-4 font-medium uppercase text-[10px] tracking-wider">Style Name / Code
+                                    <th class="pb-4 font-medium uppercase text-[10px] tracking-wider">Style Name / C_Number
                                     </th>
                                     <th class="pb-4 font-medium uppercase text-[10px] tracking-wider">Customer</th>
                                     <th class="pb-4 font-medium uppercase text-[10px] tracking-wider">Due Date</th>
@@ -198,53 +198,31 @@
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-slate-200">
+                            <tbody id="dashboardPendingBody" class="divide-y divide-slate-200">
+                                <!-- Dynamic items will be injected here -->
                                 <tr>
-                                    <td class="py-4">
-                                        <div class="font-medium">Summer Linen Blazer</div>
-                                        <div class="text-xs text-slate-500">LB-2024-001</div>
+                                    <td colspan="5" class="py-8 text-center text-slate-400 italic">
+                                        Loading pending items...
                                     </td>
-                                    <td class="py-4 text-slate-700">Nordstrom</td>
-                                    <td class="py-4 text-rose-500">Oct 24, 2023 (Overdue)</td>
-                                    <td class="py-4"><span class="text-[10px] font-bold text-orange-400">COSTING IN
-                                            PROGRESS</span></td>
-                                    <td class="py-4 text-right text-blue-500 cursor-pointer">Edit</td>
-                                </tr>
-                                <tr>
-                                    <td class="py-4">
-                                        <div class="font-medium">Vintage Denim Jacket</div>
-                                        <div class="text-xs text-slate-500">DJ-982</div>
-                                    </td>
-                                    <td class="py-4 text-slate-700">Urban Outfitters</td>
-                                    <td class="py-4 text-yellow-500">Due Today</td>
-                                    <td class="py-4"><span class="text-[10px] font-bold text-blue-400">TECHPACK
-                                            PENDING</span></td>
-                                    <td class="py-4 text-right text-blue-500 cursor-pointer">Edit</td>
-                                </tr>
-                                <tr>
-                                    <td class="py-4">
-                                        <div class="font-medium">Silk Evening Gown</div>
-                                        <div class="text-xs text-slate-500">SG-005</div>
-                                    </td>
-                                    <td class="py-4 text-slate-700">Anthropologie</td>
-                                    <td class="py-4 text-slate-500">Oct 30, 2023</td>
-                                    <td class="py-4"><span
-                                            class="text-[10px] font-bold text-emerald-400">FEASIBILITY</span></td>
-                                    <td class="py-4 text-right text-blue-500 cursor-pointer">Edit</td>
-                                </tr>
-                                <tr>
-                                    <td class="py-4">
-                                        <div class="font-medium">Activewear Leggings</div>
-                                        <div class="text-xs text-slate-500">AL-2024</div>
-                                    </td>
-                                    <td class="py-4 text-slate-700">Lululemon</td>
-                                    <td class="py-4 text-slate-500">Nov 02, 2023</td>
-                                    <td class="py-4"><span class="text-[10px] font-bold text-slate-500">AWAITING
-                                            PATTERN</span></td>
-                                    <td class="py-4 text-right text-blue-500 cursor-pointer">Edit</td>
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                    
+                    <!-- Table Footer: Pagination & Stats -->
+                    <div id="tableFooter" class="mt-4 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 border-t border-slate-100 pt-4 gap-4">
+                        <div id="tableStats">Total: 0 elements</div>
+                        <div class="flex items-center space-x-4">
+                            <div id="pageIndicator">Page 1 of 1</div>
+                            <div class="flex space-x-2">
+                                <button id="prevPageBtn" onclick="changePage(-1)" class="px-3 py-1.5 rounded border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
+                                    <i class="fas fa-chevron-left mr-1"></i> Precedent
+                                </button>
+                                <button id="nextPageBtn" onclick="changePage(1)" class="px-3 py-1.5 rounded border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
+                                    Suivant <i class="fas fa-chevron-right ml-1"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -395,7 +373,7 @@
          */
         function refreshDashboardData() {
             console.log("[DEBUG] Tentative de rafraîchissement des données (Mode Hybride JSONP)...");
-            
+
             // 1. Toujours tenter via Apps Script Library si dispo (Dashboard intégré)
             if (typeof google !== 'undefined' && google.script) {
                 google.script.run
@@ -426,16 +404,21 @@
             }
         }
 
+        // Pagination State
+        let currentPage = 1;
+        const pageSize = 6;
+        let allPendingItems = [];
+
         /**
          * Centralized UI Update for Dashboard stats
          */
         function updateDashboardUI(data) {
             if (!data) return;
-            
-            // Quota
+
+            // Quota journalier
             if (data.quota !== undefined) syncDailyQuota(data.quota);
-            
-            // Main Cards
+
+            // Blocs du haut (TOP CARDS)
             if (data.openRequests !== undefined) {
                 const openEl = document.getElementById('dashboardOpenRequests');
                 if (openEl) openEl.textContent = data.openRequests;
@@ -445,7 +428,7 @@
                 if (pendEl) pendEl.textContent = data.pendingFeasibility;
             }
 
-            // Sub-Stats Grid
+            // Indicateurs secondaires (SUB-STATS GRID)
             if (data.totalCompleteData !== undefined) {
                 const el = document.getElementById('dashboardTotalComplete');
                 if (el) el.textContent = data.totalCompleteData;
@@ -465,6 +448,205 @@
             if (data.priPending !== undefined) {
                 const el = document.getElementById('dashboardPriPending');
                 if (el) el.textContent = data.priPending;
+            }
+
+            // Tableau des tâches en attente (TABLE)
+            if (data.pendingItems !== undefined) {
+                allPendingItems = data.pendingItems;
+                renderPendingItems();
+            }
+        }
+
+        /**
+         * Renders the rows for the Pending Items table with Overdue detection, Sorting and Pagination
+         */
+        function renderPendingItems() {
+            const body = document.getElementById('dashboardPendingBody');
+            const stats = document.getElementById('tableStats');
+            const indicator = document.getElementById('pageIndicator');
+            const prevBtn = document.getElementById('prevPageBtn');
+            const nextBtn = document.getElementById('nextPageBtn');
+            
+            if (!body) return;
+
+            if (!allPendingItems || allPendingItems.length === 0) {
+                body.innerHTML = '<tr><td colspan="5" class="py-8 text-center text-slate-400">No pending items found.</td></tr>';
+                if (stats) stats.textContent = "Total: 0 element";
+                return;
+            }
+
+            // Global store for the modal to use
+            window._allPendingTasks = allPendingItems;
+
+            // Sorting: Closest due date first (ascending)
+            allPendingItems.sort((a, b) => {
+                const dateA = a.costing_ready_date ? new Date(a.costing_ready_date) : new Date(8640000000000000);
+                const dateB = b.costing_ready_date ? new Date(b.costing_ready_date) : new Date(8640000000000000);
+                return dateA - dateB;
+            });
+
+            // Pagination Logic
+            const totalItems = allPendingItems.length;
+            const totalPages = Math.ceil(totalItems / pageSize);
+            if (currentPage > totalPages) currentPage = totalPages || 1;
+            
+            const startIndex = (currentPage - 1) * pageSize;
+            const displayedItems = allPendingItems.slice(startIndex, startIndex + pageSize);
+
+            // Update UI Stats & Buttons
+            if (stats) stats.textContent = `Total: ${totalItems} element${totalItems > 1 ? 's' : ''}`;
+            if (indicator) indicator.textContent = `Page ${currentPage} of ${totalPages}`;
+            if (prevBtn) prevBtn.disabled = (currentPage <= 1);
+            if (nextBtn) nextBtn.disabled = (currentPage >= totalPages);
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            let html = '';
+            displayedItems.forEach(item => {
+                const dueDateStr = item.costing_ready_date || 'N/A';
+                const dueDate = item.costing_ready_date ? new Date(item.costing_ready_date) : null;
+                
+                let dateDisplay = dueDateStr;
+                let dateClass = "text-slate-500";
+                
+                if (dueDate && dueDate < today) {
+                    dateDisplay = `${dueDateStr} <span class="font-bold">(Overdue)</span>`;
+                    dateClass = "text-rose-500";
+                } else if (dueDate && dueDate.getTime() === today.getTime()) {
+                    dateDisplay = "Due Today";
+                    dateClass = "text-amber-500";
+                }
+
+                const statusColorClass = getStatusColorClass(item.status);
+
+                html += `
+                    <tr>
+                        <td class="py-4">
+                            <div class="font-medium">${item.title || 'Untitled'}</div>
+                            <div class="text-xs text-slate-500">${item.c_number || 'No ID'}</div>
+                        </td>
+                        <td class="py-4 text-slate-700">${item.customer || '-'}</td>
+                        <td class="py-4 ${dateClass}">${dateDisplay}</td>
+                        <td class="py-4">
+                            <span class="text-[10px] font-bold uppercase py-1 px-2 rounded ${statusColorClass}">
+                                ${item.status || 'Unknown'}
+                            </span>
+                        </td>
+                        <td class="py-4 text-right">
+                            <button onclick="showItemDetails('${item.c_number}')" class="text-blue-500 hover:text-blue-700 font-medium transition-colors">
+                                Details
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+            body.innerHTML = html;
+        }
+
+        /**
+         * Handlers for Pagination
+         */
+        function changePage(delta) {
+            currentPage += delta;
+            renderPendingItems();
+        }
+
+        /**
+         * Returns Tailwind color classes based on status
+         */
+        function getStatusColorClass(status) {
+            const s = (status || '').trim().toLowerCase();
+            if (s.includes('pattern')) return 'bg-blue-100 text-blue-700 border border-blue-200';
+            if (s.includes('feasibility')) return 'bg-orange-100 text-orange-700 border border-orange-200';
+            if (s.includes('acc') || s.includes('mkt')) return 'bg-purple-100 text-purple-700 border border-purple-200';
+            if (s.includes('pri')) return 'bg-emerald-100 text-emerald-700 border border-emerald-200';
+            if (s.includes('techpack')) return 'bg-indigo-100 text-indigo-700 border border-indigo-200';
+            if (s.includes('meeting')) return 'bg-amber-100 text-amber-700 border border-amber-200';
+            if (s.includes('progress')) return 'bg-slate-100 text-slate-700 border border-slate-200';
+            return 'bg-slate-50 text-slate-500 border border-slate-200';
+        }
+
+        /**
+         * Logic for Detail Modal
+         */
+        function showItemDetails(cNumber) {
+            const task = (window._allPendingTasks || []).find(t => t.c_number === cNumber);
+            if (!task) return;
+
+            const modal = document.getElementById('detailsModal');
+            const grid = document.getElementById('modalDetailsGrid');
+            if (!modal || !grid) return;
+
+            // List of fields requested by user
+            const fields = [
+                { label: 'C-Number', key: 'c_number' },
+                { label: 'Created', key: 'created' },
+                { label: 'Modified', key: 'modified' },
+                { label: 'Modified By', key: 'modified_by' },
+                { label: 'Title', key: 'title' },
+                { label: 'Status', key: 'status' },
+                { label: 'Customer', key: 'customer' },
+                { label: 'Department', key: 'customer_department' },
+                { label: 'Sample Type', key: 'sample_type' },
+                { label: 'TKL Season', key: 'tkl_season' },
+                { label: 'Cust Season', key: 'customer_season' },
+                { label: 'Main Fabric', key: 'main_fabric' },
+                { label: 'Fabric Sup', key: 'fabric_supplier' },
+                { label: 'Fabric Hdr', key: 'fabric_header' },
+                { label: 'Due Date', key: 'costing_ready_date' },
+                { label: 'Block Info', key: 'block_details' },
+                { label: 'Created By', key: 'created_by' },
+                { label: 'PL Name', key: 'pl_name' },
+                { label: 'PM Name', key: 'pm_name' },
+                { label: 'Accessory', key: 'accessory_name' },
+                { label: 'Techpack Remarks', key: 'remarks_techpack' },
+                { label: 'General Remarks', key: 'remarks' }
+            ];
+
+            let html = '';
+            fields.forEach(f => {
+                const val = task[f.key];
+                
+                // Only show fields that have a meaningful value
+                if (val && String(val).trim() !== "" && String(val).trim() !== "-") {
+                    html += `
+                        <div class="border-b border-white/10 pb-2">
+                            <div class="text-[10px] text-slate-400 uppercase tracking-wider mb-1">${f.label}</div>
+                            <div class="text-sm font-medium text-white break-words">${val}</div>
+                        </div>
+                    `;
+                }
+            });
+
+            // Special handling for paths/links
+            if (task.attachment) {
+                 html += `
+                    <div class="col-span-1 md:col-span-2 mt-4">
+                        <a href="${task.attachment}" target="_blank" class="inline-flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">
+                            <i class="fas fa-paperclip mr-2"></i> Open Attachment
+                        </a>
+                    </div>`;
+            }
+            if (task.folder_path) {
+                 html += `
+                    <div class="col-span-1 md:col-span-2 mt-2">
+                        <a href="${task.folder_path}" target="_blank" class="inline-flex items-center px-4 py-2 bg-slate-700 text-white rounded-lg text-sm hover:bg-slate-600 transition-colors">
+                            <i class="fas fa-folder-open mr-2"></i> View Folder
+                        </a>
+                    </div>`;
+            }
+
+            grid.innerHTML = html;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('detailsModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
             }
         }
 
@@ -524,6 +706,33 @@
             });
         };
     </script>
-</body>
+    <!-- Modal for Detailed View -->
+    <div id="detailsModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
+        <div class="glass-card w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col bg-slate-900 border border-white/20 shadow-2xl">
+            <!-- Modal Header -->
+            <div class="p-6 border-b border-white/10 flex justify-between items-center bg-white/5">
+                <h3 class="text-xl font-bold text-white flex items-center">
+                    <i class="fas fa-info-circle mr-3 text-blue-400"></i> Task Detailed Information
+                </h3>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-white transition-colors">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Modal Body -->
+            <div id="modalDetailsGrid" class="p-6 overflow-y-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Data will be injected here -->
+            </div>
+            
+            <!-- Modal Footer -->
+            <div class="p-4 border-t border-white/10 bg-white/5 text-right">
+                <button onclick="closeModal()" class="px-6 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script... (remains as is) -->
 
 </html>

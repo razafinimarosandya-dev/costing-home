@@ -139,37 +139,37 @@
                     <div class="glass-card p-4 flex items-center space-x-3">
                         <div class="bg-blue-500/10 p-2 rounded text-blue-500"><i class="fas fa-file-alt"></i></div>
                         <div>
-                            <div class="text-xs text-slate-500">TOTAL</div>
-                            <div class="font-bold">128</div>
+                            <div class="text-xs text-slate-500">TOTAL Completed</div>
+                            <div id="dashboardTotalComplete" class="font-bold">--</div>
                         </div>
                     </div>
                     <div class="glass-card p-4 flex items-center space-x-3">
                         <div class="bg-slate-100 p-2 rounded text-slate-500"><i class="fas fa-box"></i></div>
                         <div>
                             <div class="text-xs text-slate-500">TECHPACKS</div>
-                            <div class="font-bold">14</div>
+                            <div id="dashboardTechpacks" class="font-bold">--</div>
                         </div>
                     </div>
                     <div class="glass-card p-4 flex items-center space-x-3">
                         <div class="bg-slate-100 p-2 rounded text-slate-500"><i class="fas fa-tasks"></i></div>
                         <div>
                             <div class="text-xs text-slate-500">FEASIBILITY</div>
-                            <div class="font-bold">08</div>
+                            <div id="dashboardFeasibilitySub" class="font-bold">--</div>
                         </div>
                     </div>
                     <div class="glass-card p-4 flex items-center space-x-3">
                         <div class="bg-slate-100 p-2 rounded text-slate-500"><i class="fas fa-id-card"></i></div>
                         <div>
-                            <div class="text-xs text-slate-500">MKT CARDS</div>
-                            <div class="font-bold">10</div>
+                            <div class="text-xs text-slate-500">ACC Completed</div>
+                            <div id="dashboardAccPending" class="font-bold">--</div>
                         </div>
                     </div>
                     <div class="glass-card p-4 flex items-center space-x-3">
                         <div class="bg-slate-100 p-2 rounded text-slate-500"><i class="fas fa-project-diagram"></i>
                         </div>
                         <div>
-                            <div class="text-xs text-slate-500">PRIPENDING</div>
-                            <div class="font-bold">05</div>
+                            <div class="text-xs text-slate-500">PRI Completed</div>
+                            <div id="dashboardPriPending" class="font-bold">--</div>
                         </div>
                     </div>
                 </div>
@@ -435,16 +435,36 @@
             // Quota
             if (data.quota !== undefined) syncDailyQuota(data.quota);
             
-            // Open Requests
+            // Main Cards
             if (data.openRequests !== undefined) {
                 const openEl = document.getElementById('dashboardOpenRequests');
                 if (openEl) openEl.textContent = data.openRequests;
             }
-            
-            // Pending Feasibility
             if (data.pendingFeasibility !== undefined) {
                 const pendEl = document.getElementById('dashboardPendingFeasibility');
                 if (pendEl) pendEl.textContent = data.pendingFeasibility;
+            }
+
+            // Sub-Stats Grid
+            if (data.totalCompleteData !== undefined) {
+                const el = document.getElementById('dashboardTotalComplete');
+                if (el) el.textContent = data.totalCompleteData;
+            }
+            if (data.techpacksAwaiting !== undefined) {
+                const el = document.getElementById('dashboardTechpacks');
+                if (el) el.textContent = data.techpacksAwaiting;
+            }
+            if (data.feasibilityComplete !== undefined) {
+                const el = document.getElementById('dashboardFeasibilitySub');
+                if (el) el.textContent = data.feasibilityComplete;
+            }
+            if (data.accPending !== undefined) {
+                const el = document.getElementById('dashboardAccPending');
+                if (el) el.textContent = data.accPending;
+            }
+            if (data.priPending !== undefined) {
+                const el = document.getElementById('dashboardPriPending');
+                if (el) el.textContent = data.priPending;
             }
         }
 

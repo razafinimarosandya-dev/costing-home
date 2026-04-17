@@ -256,27 +256,9 @@
                         <i class="far fa-calendar-alt text-blue-500"></i>
                         <span>Feasibility Meetings</span>
                     </div>
-                    <div class="space-y-4">
-                        <div class="flex space-x-3 items-center">
-                            <div class="bg-slate-50 p-2 rounded text-center min-w-[50px]">
-                                <div class="text-[9px] uppercase text-slate-500">OCT</div>
-                                <div class="font-bold">28</div>
-                            </div>
-                            <div>
-                                <div class="text-xs font-bold">Q4 Winter Collection</div>
-                                <div class="text-[10px] text-slate-500">10:00 AM • Room 302</div>
-                            </div>
-                        </div>
-                        <div class="flex space-x-3 items-center">
-                            <div class="bg-slate-50 p-2 rounded text-center min-w-[50px]">
-                                <div class="text-[9px] uppercase text-slate-500">OCT</div>
-                                <div class="font-bold">30</div>
-                            </div>
-                            <div>
-                                <div class="text-xs font-bold">Sports Knit Feasibility</div>
-                                <div class="text-[10px] text-slate-500">02:30 PM • Virtual</div>
-                            </div>
-                        </div>
+                    <div id="dashboardMeetingsList" class="space-y-4">
+                        <!-- Dynamic items will be injected here -->
+                        <div class="text-xs text-slate-400 italic py-2">Loading meetings...</div>
                     </div>
                 </div>
 
@@ -455,6 +437,50 @@
                 allPendingItems = data.pendingItems;
                 renderPendingItems();
             }
+
+            // Feasibility Meetings (SIDEBAR)
+            if (data.meetings !== undefined) {
+                renderMeetings(data.meetings);
+            }
+        }
+
+        /**
+         * Renders the Feasibility Meetings in the sidebar (Grouped version)
+         */
+        function renderMeetings(meetings) {
+            const container = document.getElementById('dashboardMeetingsList');
+            if (!container) return;
+
+            if (!meetings || meetings.length === 0) {
+                container.innerHTML = '<div class="text-xs text-slate-400 italic py-2">No upcoming meetings.</div>';
+                return;
+            }
+
+            const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+
+            let html = '';
+            meetings.forEach(m => {
+                const d = new Date(m.date + 'T00:00:00'); 
+                const month = monthNames[d.getMonth()];
+                const day = d.getDate();
+
+                html += `
+                    <div class="flex space-x-3 items-start group">
+                        <div class="bg-blue-50 p-2 rounded text-center min-w-[50px] group-hover:bg-blue-100 transition-colors mt-0.5">
+                            <div class="text-[9px] uppercase text-blue-600 font-bold">${month}</div>
+                            <div class="font-bold text-slate-900">${day}</div>
+                        </div>
+                        <div class="overflow-hidden flex-1">
+                            <div class="text-xs font-bold text-slate-800 leading-tight">${m.title}</div>
+                            <div class="text-[10px] text-slate-500 mt-1 line-clamp-2 italic">${m.styles_list || ''}</div>
+                            <div class="text-[9px] text-blue-500 mt-1 flex items-center">
+                                <i class="far fa-clock mr-1"></i>${m.time || 'TBD'} 
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
         }
 
         /**

@@ -853,13 +853,14 @@
          */
         function consumeUrlSession() {
             const hash = window.location.hash;
+            console.log('--- CHECKING URL FRAGMENT ---', hash ? 'Fragment found' : 'No fragment');
             if (hash.startsWith('#session=')) {
                 try {
                     const encodedData = hash.substring(9);
                     const decodedData = JSON.parse(decodeURIComponent(escape(atob(encodedData))));
                     
                     if (decodedData && decodedData.loginId) {
-                        console.info('Session data recovered from URL for:', decodedData.loginId);
+                        console.info('Session recovery SUCCESS for:', decodedData.email);
                         localStorage.setItem('ACC_REMEMBERED_USER', JSON.stringify(decodedData));
                         
                         // Clean up URL without blocking history
@@ -877,6 +878,7 @@
          * Initializes the user profile dropdown with data from localStorage
          */
         function initProfileDropdown() {
+            console.log('Initializing Profile Popup...');
             consumeUrlSession(); // First, check if we just arrived with new data
 
             const REMEMBERED_USER_KEY = 'ACC_REMEMBERED_USER';
@@ -887,9 +889,13 @@
             if (!avatarContainer || !dropdown) return;
 
             // Load user data
-            const userData = JSON.parse(localStorage.getItem(REMEMBERED_USER_KEY) || 'null');
+            const storedData = localStorage.getItem(REMEMBERED_USER_KEY);
+            console.log('Data found in LocalStorage:', storedData ? 'YES' : 'NO');
+            
+            const userData = JSON.parse(storedData || 'null');
             
             if (userData) {
+                console.log('Populating popup for:', userData.email);
                 const name = userData.name || userData.username || userData.loginId || 'User';
                 const email = userData.email || userData.loginId || '---';
                 const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);

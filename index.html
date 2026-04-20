@@ -853,7 +853,10 @@
          */
         function consumeUrlSession() {
             const hash = window.location.hash;
-            console.log('--- CHECKING URL FRAGMENT ---', hash ? 'Fragment found' : 'No fragment');
+            console.log('--- SESSION DEBUG ---');
+            console.log('FULL URL:', window.location.href);
+            console.log('FRAGMENT FOUND:', hash ? 'YES ('+hash.substring(0,20)+'...)' : 'NO');
+            
             if (hash.startsWith('#session=')) {
                 try {
                     const encodedData = hash.substring(9);

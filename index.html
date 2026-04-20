@@ -68,67 +68,93 @@
             display: flex;
         }
 
-        .profile-header {
+        .profile-dropdown-content {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #f1f5f9;
+            text-align: center;
         }
 
-        .avatar-large {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        .profile-avatar-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4f46e5, #8b5cf6);
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+            overflow: hidden;
         }
 
-        .user-info .user-name {
+        .profile-avatar-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-name {
+            font-size: 1.1rem;
             font-weight: 700;
             color: #1e293b;
-            font-size: 0.95rem;
-            line-height: 1.2;
+            margin-bottom: 4px;
         }
 
-        .user-info .user-role {
-            font-size: 0.75rem;
+        .profile-email {
+            font-size: 0.85rem;
             color: #64748b;
+            margin-bottom: 16px;
         }
 
-        .dropdown-menu-item {
+        .profile-badge {
+            background-color: #f0f7ff;
+            color: #3b82f6;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 6px 16px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 24px;
+        }
+
+        .profile-divider {
+            width: 100%;
+            height: 1px;
+            background-color: #f1f5f9;
+            margin-bottom: 20px;
+        }
+
+        .btn-signout {
+            width: 100%;
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 10px 12px;
-            border-radius: 10px;
-            color: #475569;
-            font-size: 0.85rem;
-            font-weight: 500;
-            text-decoration: none;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            color: #ef4444;
+            font-weight: 600;
+            font-size: 0.9rem;
             transition: all 0.2s;
             cursor: pointer;
+            background: white;
         }
 
-        .dropdown-menu-item:hover {
-            background: #f8fafc;
-            color: #3b82f6;
+        .btn-signout:hover {
+            background-color: #fef2f2;
+            border-color: #fecaca;
+            transform: translateY(-1px);
         }
 
-        .dropdown-menu-item.logout {
-            margin-top: 10px;
-            color: #ef4444;
-        }
-
-        .dropdown-menu-item.logout:hover {
-            background: #fef2f2;
-            color: #dc2626;
+        .btn-signout i {
+            font-size: 1rem;
+            transform: rotate(180deg);
         }
 
         ::-webkit-scrollbar {
@@ -186,27 +212,18 @@
                 
                 <!-- Profile Dropdown -->
                 <div id="userDropdown" class="profile-dropdown">
-                    <div class="profile-header">
-                        <div id="dropdownInitials" class="avatar-large">?</div>
-                        <div class="user-info">
-                            <div id="dropdownName" class="user-name">Guest User</div>
-                            <div id="dropdownRole" class="user-role">Not signed in</div>
-                        </div>
-                    </div>
-                    <div id="dropdownEmailRow" class="text-[11px] text-slate-500 px-3 flex items-center gap-2 mb-4">
-                        <i class="far fa-envelope"></i>
-                        <span id="dropdownEmail">---</span>
-                    </div>
-                    <div class="space-y-1">
-                        <div class="dropdown-menu-item">
-                            <i class="far fa-user"></i> My Profile
-                        </div>
-                        <div class="dropdown-menu-item">
-                            <i class="fas fa-cog"></i> Settings
-                        </div>
-                        <div id="signOutBtn" class="dropdown-menu-item logout">
-                            <i class="fas fa-sign-out-alt"></i> Sign Out
-                        </div>
+                    <div class="profile-dropdown-content">
+                        <div id="dropdownAvatar" class="profile-avatar-circle">?</div>
+                        <div id="dropdownName" class="profile-name">Guest User</div>
+                        <div id="dropdownEmail" class="profile-email">guest@example.com</div>
+                        <div id="dropdownBadge" class="profile-badge">VISITOR</div>
+                        
+                        <div class="profile-divider"></div>
+                        
+                        <button id="signOutBtn" class="btn-signout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Sign Out</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -832,9 +849,36 @@
         }
 
         /**
+         * Checks the URL fragment for session data (cross-domain handoff)
+         */
+        function consumeUrlSession() {
+            const hash = window.location.hash;
+            if (hash.startsWith('#session=')) {
+                try {
+                    const encodedData = hash.substring(9);
+                    const decodedData = JSON.parse(decodeURIComponent(escape(atob(encodedData))));
+                    
+                    if (decodedData && decodedData.loginId) {
+                        console.info('Session data recovered from URL for:', decodedData.loginId);
+                        localStorage.setItem('ACC_REMEMBERED_USER', JSON.stringify(decodedData));
+                        
+                        // Clean up URL without blocking history
+                        window.history.replaceState(null, null, window.location.pathname + window.location.search);
+                        return true;
+                    }
+                } catch (e) {
+                    console.error('Failed to parse session from URL:', e);
+                }
+            }
+            return false;
+        }
+
+        /**
          * Initializes the user profile dropdown with data from localStorage
          */
         function initProfileDropdown() {
+            consumeUrlSession(); // First, check if we just arrived with new data
+
             const REMEMBERED_USER_KEY = 'ACC_REMEMBERED_USER';
             const avatarContainer = document.getElementById('userAvatarContainer');
             const dropdown = document.getElementById('userDropdown');
@@ -850,7 +894,7 @@
                 const email = userData.email || userData.loginId || '---';
                 const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
                 
-                // Update Avatar
+                // Update Top Nav Avatar
                 const initialsEl = document.getElementById('userAvatarInitials');
                 const defaultIcon = document.getElementById('userAvatarDefault');
                 if (initialsEl && defaultIcon) {
@@ -859,16 +903,16 @@
                     defaultIcon.classList.add('hidden');
                 }
                 
-                // Update Dropdown
-                const dInitials = document.getElementById('dropdownInitials');
+                // Update Dropdown Card
+                const dAvatar = document.getElementById('dropdownAvatar');
                 const dName = document.getElementById('dropdownName');
-                const dRole = document.getElementById('dropdownRole');
                 const dEmail = document.getElementById('dropdownEmail');
+                const dBadge = document.getElementById('dropdownBadge');
                 
-                if (dInitials) dInitials.textContent = initials;
+                if (dAvatar) dAvatar.textContent = initials;
                 if (dName) dName.textContent = name;
-                if (dRole) dRole.textContent = userData.jobTitle || (userData.provider === 'microsoft' ? 'Microsoft Account' : 'Standard Account');
                 if (dEmail) dEmail.textContent = email;
+                if (dBadge) dBadge.textContent = (userData.jobTitle || 'MEMBER').toUpperCase();
             }
 
             // Toggle Dropdown

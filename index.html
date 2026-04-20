@@ -453,8 +453,63 @@
 
     <script>
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzSdyx3uNKZPhbhwg_eIc_VmRTvUNF8-Q5z9hunbr7seSuz2nNdO-awDI8qserEQHkr/exec";
+        const LOGIN_PAGE_URL = "https://costing-app-beta.vercel.app/";
 
-        function redirectTo(url) {
+        /**
+         * Auth Guard: Redirects to login if no session is found.
+         * Must be called immediately at script start.
+         */
+        function checkAuth() {
+            // 1. Try to catch session from URL first (cross-domain login)
+            consumeUrlSession();
+
+            // 2. Check if we have a user session in localStorage
+            const session = localStorage.getItem('ACC_REMEMBERED_USER');
+            
+            if (!session) {
+                console.warn('No active session found. Redirecting to login...');
+                window.location.href = LOGIN_PAGE_URL;
+                return false;
+            }
+            console.log('Session verified. Access granted.');
+            return true;
+        }
+
+        /**
+         * Checks the URL fragment or query for session data (cross-domain handoff)
+         */
+        function consumeUrlSession() {
+            const hash = window.location.hash;
+            const urlParams = new URLSearchParams(window.location.search);
+            const querySession = urlParams.get('session');
+            
+            let encodedData = null;
+            if (hash.startsWith('#session=')) {
+                encodedData = hash.substring(9);
+            } else if (querySession) {
+                encodedData = querySession;
+            }
+
+            if (encodedData) {
+                try {
+                    const decodedData = JSON.parse(decodeURIComponent(escape(atob(encodedData))));
+                    if (decodedData && decodedData.loginId) {
+                        localStorage.setItem('ACC_REMEMBERED_USER', JSON.stringify(decodedData));
+                        // Clean up URL without blocking history
+                        window.history.replaceState(null, null, window.location.pathname);
+                        return true;
+                    }
+                } catch (e) {
+                    console.error('Failed to parse session from URL:', e);
+                }
+            }
+            return false;
+        }
+
+        // EXECUTE AUTH CHECK IMMEDIATELY
+        if (checkAuth()) {
+            // Only continue if authenticated
+            function redirectTo(url) {
             if (!url) return;
 
             window.location.href = url;
@@ -848,44 +903,6 @@
             }
         }
 
-        /**
-         * Checks the URL fragment for session data (cross-domain handoff)
-         */
-        function consumeUrlSession() {
-            const hash = window.location.hash;
-            const urlParams = new URLSearchParams(window.location.search);
-            const querySession = urlParams.get('session');
-            
-            console.log('--- SESSION DEBUG ---');
-            console.log('FULL URL:', window.location.href);
-            console.log('FRAGMENT SESSION:', hash.startsWith('#session=') ? 'YES' : 'NO');
-            console.log('QUERY SESSION:', querySession ? 'YES' : 'NO');
-            
-            let encodedData = null;
-            if (hash.startsWith('#session=')) {
-                encodedData = hash.substring(9);
-            } else if (querySession) {
-                encodedData = querySession;
-            }
-
-            if (encodedData) {
-                try {
-                    const decodedData = JSON.parse(decodeURIComponent(escape(atob(encodedData))));
-                    
-                    if (decodedData && decodedData.loginId) {
-                        console.info('Session recovery SUCCESS for:', decodedData.email);
-                        localStorage.setItem('ACC_REMEMBERED_USER', JSON.stringify(decodedData));
-                        
-                        // Clean up URL without blocking history
-                        window.history.replaceState(null, null, window.location.pathname + window.location.search);
-                        return true;
-                    }
-                } catch (e) {
-                    console.error('Failed to parse session from URL:', e);
-                }
-            }
-            return false;
-        }
 
         /**
          * Initializes the user profile dropdown with data from localStorage
@@ -952,8 +969,8 @@
                 signOutBtn.addEventListener('click', () => {
                     if (confirm('Are you sure you want to sign out?')) {
                         localStorage.removeItem(REMEMBERED_USER_KEY);
-                        // Redirect to the login page (index_18_fixed.html)
-                        window.location.href = 'index_18_fixed.html';
+                        // Redirect to the login page (Vercel Beta)
+                        window.location.href = LOGIN_PAGE_URL;
                     }
                 });
             }

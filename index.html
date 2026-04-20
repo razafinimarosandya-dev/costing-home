@@ -41,6 +41,96 @@
             border-bottom: 2px solid var(--accent-blue);
         }
 
+        /* Profile Dropdown Styles */
+        .profile-dropdown {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            width: 280px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            z-index: 100;
+            display: none;
+            flex-direction: column;
+            animation: slideInDown 0.2s ease-out;
+        }
+
+        @keyframes slideInDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .profile-dropdown.show {
+            display: flex;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .avatar-large {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .user-info .user-name {
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 0.95rem;
+            line-height: 1.2;
+        }
+
+        .user-info .user-role {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+
+        .dropdown-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            color: #475569;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .dropdown-menu-item:hover {
+            background: #f8fafc;
+            color: #3b82f6;
+        }
+
+        .dropdown-menu-item.logout {
+            margin-top: 10px;
+            color: #ef4444;
+        }
+
+        .dropdown-menu-item.logout:hover {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -88,8 +178,37 @@
                     class="bg-slate-50 border-none rounded-md py-2 pl-10 pr-4 text-sm focus:ring-1 focus:ring-blue-500 w-64">
             </div>
             <i class="far fa-bell text-slate-500 cursor-pointer"></i>
-            <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">
-                <i class="far fa-user text-xs"></i>
+            <div class="relative">
+                <div id="userAvatarContainer" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200 cursor-pointer hover:bg-slate-200 transition-colors">
+                    <i id="userAvatarDefault" class="far fa-user text-xs"></i>
+                    <span id="userAvatarInitials" class="hidden text-[10px] font-bold text-blue-600"></span>
+                </div>
+                
+                <!-- Profile Dropdown -->
+                <div id="userDropdown" class="profile-dropdown">
+                    <div class="profile-header">
+                        <div id="dropdownInitials" class="avatar-large">?</div>
+                        <div class="user-info">
+                            <div id="dropdownName" class="user-name">Guest User</div>
+                            <div id="dropdownRole" class="user-role">Not signed in</div>
+                        </div>
+                    </div>
+                    <div id="dropdownEmailRow" class="text-[11px] text-slate-500 px-3 flex items-center gap-2 mb-4">
+                        <i class="far fa-envelope"></i>
+                        <span id="dropdownEmail">---</span>
+                    </div>
+                    <div class="space-y-1">
+                        <div class="dropdown-menu-item">
+                            <i class="far fa-user"></i> My Profile
+                        </div>
+                        <div class="dropdown-menu-item">
+                            <i class="fas fa-cog"></i> Settings
+                        </div>
+                        <div id="signOutBtn" class="dropdown-menu-item logout">
+                            <i class="fas fa-sign-out-alt"></i> Sign Out
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -712,11 +831,77 @@
             }
         }
 
+        /**
+         * Initializes the user profile dropdown with data from localStorage
+         */
+        function initProfileDropdown() {
+            const REMEMBERED_USER_KEY = 'ACC_REMEMBERED_USER';
+            const avatarContainer = document.getElementById('userAvatarContainer');
+            const dropdown = document.getElementById('userDropdown');
+            const signOutBtn = document.getElementById('signOutBtn');
+            
+            if (!avatarContainer || !dropdown) return;
+
+            // Load user data
+            const userData = JSON.parse(localStorage.getItem(REMEMBERED_USER_KEY) || 'null');
+            
+            if (userData) {
+                const name = userData.name || userData.username || userData.loginId || 'User';
+                const email = userData.email || userData.loginId || '---';
+                const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+                
+                // Update Avatar
+                const initialsEl = document.getElementById('userAvatarInitials');
+                const defaultIcon = document.getElementById('userAvatarDefault');
+                if (initialsEl && defaultIcon) {
+                    initialsEl.textContent = initials;
+                    initialsEl.classList.remove('hidden');
+                    defaultIcon.classList.add('hidden');
+                }
+                
+                // Update Dropdown
+                const dInitials = document.getElementById('dropdownInitials');
+                const dName = document.getElementById('dropdownName');
+                const dRole = document.getElementById('dropdownRole');
+                const dEmail = document.getElementById('dropdownEmail');
+                
+                if (dInitials) dInitials.textContent = initials;
+                if (dName) dName.textContent = name;
+                if (dRole) dRole.textContent = userData.jobTitle || (userData.provider === 'microsoft' ? 'Microsoft Account' : 'Standard Account');
+                if (dEmail) dEmail.textContent = email;
+            }
+
+            // Toggle Dropdown
+            avatarContainer.addEventListener('click', (e) => {
+                e.stopPropagation();
+                dropdown.classList.toggle('show');
+            });
+
+            // Close on click outside
+            document.addEventListener('click', (e) => {
+                if (!dropdown.contains(e.target) && !avatarContainer.contains(e.target)) {
+                    dropdown.classList.remove('show');
+                }
+            });
+
+            // Sign Out logic
+            if (signOutBtn) {
+                signOutBtn.addEventListener('click', () => {
+                    if (confirm('Are you sure you want to sign out?')) {
+                        localStorage.removeItem(REMEMBERED_USER_KEY);
+                        // Redirect to the login page (index_18_fixed.html)
+                        window.location.href = 'index_18_fixed.html';
+                    }
+                });
+            }
+        }
+
         // Initialisation
         window.onload = function () {
             console.log("Tableau de bord chargé.");
             syncDailyQuota();
             refreshDashboardData();
+            initProfileDropdown(); // Initialize Profile
 
             // Periodic refresh every 30 seconds for faster multi-user sync
             setInterval(refreshDashboardData, 30000);

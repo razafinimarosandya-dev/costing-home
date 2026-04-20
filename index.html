@@ -509,9 +509,24 @@
         // EXECUTE AUTH CHECK IMMEDIATELY
         if (checkAuth()) {
             // Only continue if authenticated
-            function redirectTo(url) {
+        function redirectTo(url) {
             if (!url) return;
 
+            // Carry over the session if it exists
+            const session = localStorage.getItem('ACC_REMEMBERED_USER');
+            if (session) {
+                try {
+                    const sessionObj = JSON.parse(session);
+                    const encodedSession = btoa(unescape(encodeURIComponent(JSON.stringify(sessionObj))));
+                    // Construct the URL with the session parameter
+                    const separator = url.includes('?') ? '&' : '?';
+                    window.location.href = `${url}${separator}session=${encodedSession}`;
+                    return;
+                } catch (e) {
+                    console.error('Failed to carry session:', e);
+                }
+            }
+            
             window.location.href = url;
         }
 

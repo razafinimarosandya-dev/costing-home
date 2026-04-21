@@ -374,15 +374,9 @@
                         </div>
                         <span class="bg-rose-500 text-slate-900 text-[10px] px-2 py-0.5 rounded-full">3</span>
                     </div>
-                    <div class="space-y-4">
-                        <div class="border-l-4 border-rose-500 bg-rose-500/5 p-3 rounded-r">
-                            <div class="text-xs font-bold">Fabric Cost Missing</div>
-                            <div class="text-[11px] text-slate-500 mt-1">Summer Linen Blazer is 2 days overdue.</div>
-                        </div>
-                        <div class="border-l-4 border-orange-500 bg-orange-500/5 p-3 rounded-r">
-                            <div class="text-xs font-bold">MKT Card Approval</div>
-                            <div class="text-[11px] text-slate-500 mt-1">Urban Denim series needs signature.</div>
-                        </div>
+                    <div id="dashboardAlertsList" class="space-y-4">
+                        <!-- Dynamic items will be injected here -->
+                        <div class="text-[11px] text-slate-400 italic">Scanning for delays...</div>
                     </div>
                 </div>
 
@@ -407,53 +401,14 @@
             </div>
         </section>
 
-        <!-- COLLES VOS PAGES ICI -->
-
-        <section id="tab-create-request" class="tab-content hidden">
-            <!-- COPIEZ VOTRE CODE HTML POUR 'CREATE REQUEST' ICI -->
-            <div class="glass-card p-10 text-center">
-                <h2 class="text-2xl font-bold mb-4">Create New Request</h2>
-                <p class="text-slate-500">Espace réservé pour votre module de création de requête.</p>
-            </div>
-        </section>
-
-        <section id="tab-techpack" class="tab-content hidden">
-            <!-- COPIEZ VOTRE CODE HTML POUR 'TECHPACK' ICI -->
-            <div class="glass-card p-10 text-center">
-                <h2 class="text-2xl font-bold mb-4">Techpack Management</h2>
-                <p class="text-slate-500">Espace réservé pour votre module Techpack.</p>
-            </div>
-        </section>
-
-        <section id="tab-pattern" class="tab-content hidden">
-            <!-- COPIEZ VOTRE CODE HTML POUR 'PATTERN' ICI -->
-            <div class="glass-card p-10 text-center">
-                <h2 class="text-2xl font-bold mb-4">Pattern Design</h2>
-                <p class="text-slate-500">Espace réservé pour votre module Pattern.</p>
-            </div>
-        </section>
-
-        <section id="tab-mkt-cards" class="tab-content hidden">
-            <!-- COPIEZ VOTRE CODE HTML POUR 'MKT CARDS' ICI -->
-            <div class="glass-card p-10 text-center">
-                <h2 class="text-2xl font-bold mb-4">MKT Cards Approval</h2>
-                <p class="text-slate-500">Espace réservé pour votre module MKT Cards.</p>
-            </div>
-        </section>
-
-        <section id="tab-feasibility" class="tab-content hidden">
-            <!-- COPIEZ VOTRE CODE HTML POUR 'FEASIBILITY' ICI -->
-            <div class="glass-card p-10 text-center">
-                <h2 class="text-2xl font-bold mb-4">Feasibility Review</h2>
-                <p class="text-slate-500">Espace réservé pour votre module Feasibility.</p>
-            </div>
-        </section>
+        <!-- CONTENT PLACEMENT REMOVED (External redirects used instead) -->
 
     </main>
 
     <script>
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzSdyx3uNKZPhbhwg_eIc_VmRTvUNF8-Q5z9hunbr7seSuz2nNdO-awDI8qserEQHkr/exec";
         const LOGIN_PAGE_URL = "https://costing-app-beta.vercel.app/";
+        const REMEMBERED_USER_KEY = 'ACC_REMEMBERED_USER';
 
         /**
          * Auth Guard: Redirects to login if no session is found.
@@ -464,7 +419,7 @@
             consumeUrlSession();
 
             // 2. Check if we have a user session in localStorage
-            const session = localStorage.getItem('ACC_REMEMBERED_USER');
+            const session = localStorage.getItem(REMEMBERED_USER_KEY);
             
             if (!session) {
                 console.warn('No active session found. Redirecting to login...');
@@ -494,7 +449,7 @@
                 try {
                     const decodedData = JSON.parse(decodeURIComponent(escape(atob(encodedData))));
                     if (decodedData && decodedData.loginId) {
-                        localStorage.setItem('ACC_REMEMBERED_USER', JSON.stringify(decodedData));
+                        localStorage.setItem(REMEMBERED_USER_KEY, JSON.stringify(decodedData));
                         // Clean up URL without blocking history
                         window.history.replaceState(null, null, window.location.pathname);
                         return true;
@@ -509,24 +464,9 @@
         // EXECUTE AUTH CHECK IMMEDIATELY
         if (checkAuth()) {
             // Only continue if authenticated
-        function redirectTo(url) {
+            function redirectTo(url) {
             if (!url) return;
 
-            // Carry over the session if it exists
-            const session = localStorage.getItem('ACC_REMEMBERED_USER');
-            if (session) {
-                try {
-                    const sessionObj = JSON.parse(session);
-                    const encodedSession = btoa(unescape(encodeURIComponent(JSON.stringify(sessionObj))));
-                    // Construct the URL with the session parameter
-                    const separator = url.includes('?') ? '&' : '?';
-                    window.location.href = `${url}${separator}session=${encodedSession}`;
-                    return;
-                } catch (e) {
-                    console.error('Failed to carry session:', e);
-                }
-            }
-            
             window.location.href = url;
         }
 
@@ -648,6 +588,50 @@
             if (data.meetings !== undefined) {
                 renderMeetings(data.meetings);
             }
+
+            // Mise à jour des alertes Overdue
+            if (data.pendingItems !== undefined) {
+                renderOverdueAlerts(data.pendingItems);
+            }
+        }
+
+        /**
+         * Renders dynamic alerts based on overdue tasks
+         */
+        function renderOverdueAlerts(items) {
+            const container = document.getElementById('dashboardAlertsList');
+            const alertCount = document.querySelector('.bg-rose-500.text-slate-900'); // Selection the badge
+            if (!container) return;
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            const overdueItems = items.filter(item => {
+                if (!item.costing_ready_date) return false;
+                const dueDate = new Date(item.costing_ready_date);
+                return dueDate < today;
+            });
+
+            if (alertCount) alertCount.textContent = overdueItems.length;
+
+            if (overdueItems.length === 0) {
+                container.innerHTML = '<div class="text-[11px] text-slate-400 italic">No critical delays found.</div>';
+                if (alertCount) alertCount.classList.add('hidden');
+                return;
+            }
+
+            if (alertCount) alertCount.classList.remove('hidden');
+
+            let html = '';
+            overdueItems.slice(0, 5).forEach(item => {
+                html += `
+                    <div class="border-l-4 border-rose-500 bg-rose-500/5 p-3 rounded-r cursor-pointer hover:bg-rose-500/10 transition-colors" onclick="showItemDetails('${item.c_number}')">
+                        <div class="text-xs font-bold">${item.status || 'Pending Item'}</div>
+                        <div class="text-[11px] text-slate-500 mt-1">${item.title || item.c_number} est en retard.</div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
         }
 
         /**
@@ -926,7 +910,6 @@
             console.log('Initializing Profile Popup...');
             consumeUrlSession(); // First, check if we just arrived with new data
 
-            const REMEMBERED_USER_KEY = 'ACC_REMEMBERED_USER';
             const avatarContainer = document.getElementById('userAvatarContainer');
             const dropdown = document.getElementById('userDropdown');
             const signOutBtn = document.getElementById('signOutBtn');
@@ -994,11 +977,11 @@
         // Initialisation
         window.onload = function () {
             console.log("Tableau de bord chargé.");
+            initProfileDropdown(); 
             syncDailyQuota();
             refreshDashboardData();
-            initProfileDropdown(); // Initialize Profile
-
-            // Periodic refresh every 30 seconds for faster multi-user sync
+            
+            // Rafraîchissement périodique (30s)
             setInterval(refreshDashboardData, 30000);
 
             // Listen for changes in other tabs (e.g. Feasibility)
@@ -1010,9 +993,10 @@
                     } catch (ex) { }
                 }
             });
-        }
-    };
+        });
+
     </script>
+
     <!-- Modal for Detailed View -->
     <div id="detailsModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
         <div class="glass-card w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col bg-slate-900 border border-white/20 shadow-2xl">
@@ -1040,6 +1024,5 @@
         </div>
     </div>
 
-    <!-- Script... (remains as is) -->
-
+</body>
 </html>

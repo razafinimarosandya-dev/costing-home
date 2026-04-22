@@ -509,10 +509,18 @@
         // EXECUTE AUTH CHECK IMMEDIATELY
         if (checkAuth()) {
             // Only continue if authenticated
-            function redirectTo(url) {
+        function redirectTo(url) {
             if (!url) return;
 
-            window.location.href = url;
+            // Récupérer la session actuelle pour la passer au domaine cible
+            const sessionData = localStorage.getItem('ACC_REMEMBERED_USER');
+            if (sessionData) {
+                const encodedSession = btoa(unescape(encodeURIComponent(sessionData)));
+                const separator = url.includes('?') ? '&' : '?';
+                window.location.href = `${url}${separator}session=${encodedSession}`;
+            } else {
+                window.location.href = url;
+            }
         }
 
         /**

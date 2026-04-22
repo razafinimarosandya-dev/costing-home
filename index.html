@@ -60,15 +60,8 @@
         }
 
         @keyframes slideInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .profile-dropdown.show {
@@ -212,12 +205,11 @@
             </div>
             <i class="far fa-bell text-slate-500 cursor-pointer"></i>
             <div class="relative">
-                <div id="userAvatarContainer"
-                    class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200 cursor-pointer hover:bg-slate-200 transition-colors">
+                <div id="userAvatarContainer" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200 cursor-pointer hover:bg-slate-200 transition-colors">
                     <i id="userAvatarDefault" class="far fa-user text-xs"></i>
                     <span id="userAvatarInitials" class="hidden text-[10px] font-bold text-blue-600"></span>
                 </div>
-
+                
                 <!-- Profile Dropdown -->
                 <div id="userDropdown" class="profile-dropdown">
                     <div class="profile-dropdown-content">
@@ -225,9 +217,9 @@
                         <div id="dropdownName" class="profile-name">Guest User</div>
                         <div id="dropdownEmail" class="profile-email">guest@example.com</div>
                         <div id="dropdownBadge" class="profile-badge">VISITOR</div>
-
+                        
                         <div class="profile-divider"></div>
-
+                        
                         <button id="signOutBtn" class="btn-signout">
                             <i class="fas fa-sign-out-alt"></i>
                             <span>Sign Out</span>
@@ -333,8 +325,7 @@
                         <table class="w-full text-left text-sm">
                             <thead>
                                 <tr class="text-slate-500 border-b border-slate-200">
-                                    <th class="pb-4 font-medium uppercase text-[10px] tracking-wider">Style Name /
-                                        C_Number
+                                    <th class="pb-4 font-medium uppercase text-[10px] tracking-wider">Style Name / C_Number
                                     </th>
                                     <th class="pb-4 font-medium uppercase text-[10px] tracking-wider">Customer</th>
                                     <th class="pb-4 font-medium uppercase text-[10px] tracking-wider">Due Date</th>
@@ -353,20 +344,17 @@
                             </tbody>
                         </table>
                     </div>
-
+                    
                     <!-- Table Footer: Pagination & Stats -->
-                    <div id="tableFooter"
-                        class="mt-4 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 border-t border-slate-100 pt-4 gap-4">
+                    <div id="tableFooter" class="mt-4 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 border-t border-slate-100 pt-4 gap-4">
                         <div id="tableStats">Total: 0 elements</div>
                         <div class="flex items-center space-x-4">
                             <div id="pageIndicator">Page 1 of 1</div>
                             <div class="flex space-x-2">
-                                <button id="prevPageBtn" onclick="changePage(-1)"
-                                    class="px-3 py-1.5 rounded border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
+                                <button id="prevPageBtn" onclick="changePage(-1)" class="px-3 py-1.5 rounded border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
                                     <i class="fas fa-chevron-left mr-1"></i> Precedent
                                 </button>
-                                <button id="nextPageBtn" onclick="changePage(1)"
-                                    class="px-3 py-1.5 rounded border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
+                                <button id="nextPageBtn" onclick="changePage(1)" class="px-3 py-1.5 rounded border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
                                     Suivant <i class="fas fa-chevron-right ml-1"></i>
                                 </button>
                             </div>
@@ -386,9 +374,15 @@
                         </div>
                         <span class="bg-rose-500 text-slate-900 text-[10px] px-2 py-0.5 rounded-full">3</span>
                     </div>
-                    <div id="dashboardAlertsList" class="space-y-4">
-                        <!-- Dynamic items will be injected here -->
-                        <div class="text-[11px] text-slate-400 italic">Scanning for delays...</div>
+                    <div class="space-y-4">
+                        <div class="border-l-4 border-rose-500 bg-rose-500/5 p-3 rounded-r">
+                            <div class="text-xs font-bold">Fabric Cost Missing</div>
+                            <div class="text-[11px] text-slate-500 mt-1">Summer Linen Blazer is 2 days overdue.</div>
+                        </div>
+                        <div class="border-l-4 border-orange-500 bg-orange-500/5 p-3 rounded-r">
+                            <div class="text-xs font-bold">MKT Card Approval</div>
+                            <div class="text-[11px] text-slate-500 mt-1">Urban Denim series needs signature.</div>
+                        </div>
                     </div>
                 </div>
 
@@ -413,14 +407,53 @@
             </div>
         </section>
 
-        <!-- CONTENT PLACEMENT REMOVED (External redirects used instead) -->
+        <!-- COLLES VOS PAGES ICI -->
+
+        <section id="tab-create-request" class="tab-content hidden">
+            <!-- COPIEZ VOTRE CODE HTML POUR 'CREATE REQUEST' ICI -->
+            <div class="glass-card p-10 text-center">
+                <h2 class="text-2xl font-bold mb-4">Create New Request</h2>
+                <p class="text-slate-500">Espace réservé pour votre module de création de requête.</p>
+            </div>
+        </section>
+
+        <section id="tab-techpack" class="tab-content hidden">
+            <!-- COPIEZ VOTRE CODE HTML POUR 'TECHPACK' ICI -->
+            <div class="glass-card p-10 text-center">
+                <h2 class="text-2xl font-bold mb-4">Techpack Management</h2>
+                <p class="text-slate-500">Espace réservé pour votre module Techpack.</p>
+            </div>
+        </section>
+
+        <section id="tab-pattern" class="tab-content hidden">
+            <!-- COPIEZ VOTRE CODE HTML POUR 'PATTERN' ICI -->
+            <div class="glass-card p-10 text-center">
+                <h2 class="text-2xl font-bold mb-4">Pattern Design</h2>
+                <p class="text-slate-500">Espace réservé pour votre module Pattern.</p>
+            </div>
+        </section>
+
+        <section id="tab-mkt-cards" class="tab-content hidden">
+            <!-- COPIEZ VOTRE CODE HTML POUR 'MKT CARDS' ICI -->
+            <div class="glass-card p-10 text-center">
+                <h2 class="text-2xl font-bold mb-4">MKT Cards Approval</h2>
+                <p class="text-slate-500">Espace réservé pour votre module MKT Cards.</p>
+            </div>
+        </section>
+
+        <section id="tab-feasibility" class="tab-content hidden">
+            <!-- COPIEZ VOTRE CODE HTML POUR 'FEASIBILITY' ICI -->
+            <div class="glass-card p-10 text-center">
+                <h2 class="text-2xl font-bold mb-4">Feasibility Review</h2>
+                <p class="text-slate-500">Espace réservé pour votre module Feasibility.</p>
+            </div>
+        </section>
 
     </main>
 
     <script>
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzSdyx3uNKZPhbhwg_eIc_VmRTvUNF8-Q5z9hunbr7seSuz2nNdO-awDI8qserEQHkr/exec";
         const LOGIN_PAGE_URL = "https://costing-app-beta.vercel.app/";
-        const REMEMBERED_USER_KEY = 'ACC_REMEMBERED_USER';
 
         /**
          * Auth Guard: Redirects to login if no session is found.
@@ -431,8 +464,8 @@
             consumeUrlSession();
 
             // 2. Check if we have a user session in localStorage
-            const session = localStorage.getItem(REMEMBERED_USER_KEY);
-
+            const session = localStorage.getItem('ACC_REMEMBERED_USER');
+            
             if (!session) {
                 console.warn('No active session found. Redirecting to login...');
                 window.location.href = LOGIN_PAGE_URL;
@@ -449,7 +482,7 @@
             const hash = window.location.hash;
             const urlParams = new URLSearchParams(window.location.search);
             const querySession = urlParams.get('session');
-
+            
             let encodedData = null;
             if (hash.startsWith('#session=')) {
                 encodedData = hash.substring(9);
@@ -461,7 +494,7 @@
                 try {
                     const decodedData = JSON.parse(decodeURIComponent(escape(atob(encodedData))));
                     if (decodedData && decodedData.loginId) {
-                        localStorage.setItem(REMEMBERED_USER_KEY, JSON.stringify(decodedData));
+                        localStorage.setItem('ACC_REMEMBERED_USER', JSON.stringify(decodedData));
                         // Clean up URL without blocking history
                         window.history.replaceState(null, null, window.location.pathname);
                         return true;
@@ -477,196 +510,152 @@
         if (checkAuth()) {
             // Only continue if authenticated
             function redirectTo(url) {
-                if (!url) return;
+            if (!url) return;
 
-                window.location.href = url;
+            window.location.href = url;
+        }
+
+        /**
+          * Gestion de la navigation par onglets
+          */
+        function switchTab(tabId) {
+            // Masquer tout le contenu
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+
+            // Retirer l'état actif des liens
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // Afficher le contenu sélectionné
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+
+            // Activer le lien de navigation correspondant
+            document.getElementById('nav-' + tabId).classList.add('active');
+
+            // Logique optionnelle pour charger des données via AppScript ici
+            if (tabId === 'dashboard') {
+                refreshDashboardData();
             }
+        }
 
-            /**
-              * Gestion de la navigation par onglets
-              */
-            function switchTab(tabId) {
-                // Masquer tout le contenu
-                document.querySelectorAll('.tab-content').forEach(tab => {
-                    tab.classList.add('hidden');
-                });
+        /**
+         * Fetches live data from Google Apps Script, including the shared Daily Quota.
+         */
+        function refreshDashboardData() {
+            console.log("[DEBUG] Tentative de rafraîchissement des données (Mode Hybride JSONP)...");
 
-                // Retirer l'état actif des liens
-                document.querySelectorAll('.nav-link').forEach(link => {
-                    link.classList.remove('active');
-                });
-
-                // Afficher le contenu sélectionné
-                document.getElementById('tab-' + tabId).classList.remove('hidden');
-
-                // Activer le lien de navigation correspondant
-                document.getElementById('nav-' + tabId).classList.add('active');
-
-                // Logique optionnelle pour charger des données via AppScript ici
-                if (tabId === 'dashboard') {
-                    refreshDashboardData();
-                }
-            }
-
-            /**
-             * Fetches live data from Google Apps Script, including the shared Daily Quota.
-             */
-            function refreshDashboardData() {
-                console.log("[DEBUG] Tentative de rafraîchissement des données (Mode Hybride JSONP)...");
-
-                // 1. Toujours tenter via Apps Script Library si dispo (Dashboard intégré)
-                if (typeof google !== 'undefined' && google.script) {
-                    google.script.run
-                        .withSuccessHandler(function (data) {
-                            console.log("[DEBUG] Réponse serveur (GAS) reçue :", data);
-                            updateDashboardUI(data);
-                        })
-                        .withFailureHandler(function (err) {
-                            console.error("[DEBUG] ÉCHEC Apps Script :", err);
-                        })
-                        .getDashboardData();
-                } else {
-                    // 2. Fallback JSONP pour Dashboard hébergé sur lien externe (Vercel)
-                    console.log("[DEBUG] Mode externe détecté. Utilisation de JSONP.");
-                    const callbackName = "cb_" + Date.now();
-                    window[callbackName] = function (data) {
-                        console.log("[DEBUG] Réponse serveur (JSONP) reçue :", data);
+            // 1. Toujours tenter via Apps Script Library si dispo (Dashboard intégré)
+            if (typeof google !== 'undefined' && google.script) {
+                google.script.run
+                    .withSuccessHandler(function (data) {
+                        console.log("[DEBUG] Réponse serveur (GAS) reçue :", data);
                         updateDashboardUI(data);
-                        delete window[callbackName];
-                        const scriptTag = document.getElementById(callbackName);
-                        if (scriptTag) scriptTag.remove();
-                    };
+                    })
+                    .withFailureHandler(function (err) {
+                        console.error("[DEBUG] ÉCHEC Apps Script :", err);
+                    })
+                    .getDashboardData();
+            } else {
+                // 2. Fallback JSONP pour Dashboard hébergé sur lien externe (Vercel)
+                console.log("[DEBUG] Mode externe détecté. Utilisation de JSONP.");
+                const callbackName = "cb_" + Date.now();
+                window[callbackName] = function (data) {
+                    console.log("[DEBUG] Réponse serveur (JSONP) reçue :", data);
+                    updateDashboardUI(data);
+                    delete window[callbackName];
+                    const scriptTag = document.getElementById(callbackName);
+                    if (scriptTag) scriptTag.remove();
+                };
 
-                    const script = document.createElement("script");
-                    script.id = callbackName;
-                    script.src = APPS_SCRIPT_URL + "?action=getDashboardStats&callback=" + callbackName;
-                    document.body.appendChild(script);
-                }
+                const script = document.createElement("script");
+                script.id = callbackName;
+                script.src = APPS_SCRIPT_URL + "?action=getDashboardStats&callback=" + callbackName;
+                document.body.appendChild(script);
+            }
+        }
+
+        // Pagination State
+        let currentPage = 1;
+        const pageSize = 6;
+        let allPendingItems = [];
+
+        /**
+         * Centralized UI Update for Dashboard stats
+         */
+        function updateDashboardUI(data) {
+            if (!data) return;
+
+            // Quota journalier
+            if (data.quota !== undefined) syncDailyQuota(data.quota);
+
+            // Blocs du haut (TOP CARDS)
+            if (data.openRequests !== undefined) {
+                const openEl = document.getElementById('dashboardOpenRequests');
+                if (openEl) openEl.textContent = data.openRequests;
+            }
+            if (data.pendingFeasibility !== undefined) {
+                const pendEl = document.getElementById('dashboardPendingFeasibility');
+                if (pendEl) pendEl.textContent = data.pendingFeasibility;
             }
 
-            // Pagination State
-            let currentPage = 1;
-            const pageSize = 6;
-            let allPendingItems = [];
-
-            /**
-             * Centralized UI Update for Dashboard stats
-             */
-            function updateDashboardUI(data) {
-                if (!data) return;
-
-                // Quota journalier
-                if (data.quota !== undefined) syncDailyQuota(data.quota);
-
-                // Blocs du haut (TOP CARDS)
-                if (data.openRequests !== undefined) {
-                    const openEl = document.getElementById('dashboardOpenRequests');
-                    if (openEl) openEl.textContent = data.openRequests;
-                }
-                if (data.pendingFeasibility !== undefined) {
-                    const pendEl = document.getElementById('dashboardPendingFeasibility');
-                    if (pendEl) pendEl.textContent = data.pendingFeasibility;
-                }
-
-                // Indicateurs secondaires (SUB-STATS GRID)
-                if (data.totalCompleteData !== undefined) {
-                    const el = document.getElementById('dashboardTotalComplete');
-                    if (el) el.textContent = data.totalCompleteData;
-                }
-                if (data.techpacksAwaiting !== undefined) {
-                    const el = document.getElementById('dashboardTechpacks');
-                    if (el) el.textContent = data.techpacksAwaiting;
-                }
-                if (data.feasibilityComplete !== undefined) {
-                    const el = document.getElementById('dashboardFeasibilitySub');
-                    if (el) el.textContent = data.feasibilityComplete;
-                }
-                if (data.accPending !== undefined) {
-                    const el = document.getElementById('dashboardAccPending');
-                    if (el) el.textContent = data.accPending;
-                }
-                if (data.priPending !== undefined) {
-                    const el = document.getElementById('dashboardPriPending');
-                    if (el) el.textContent = data.priPending;
-                }
-
-                // Tableau des tâches en attente (TABLE)
-                if (data.pendingItems !== undefined) {
-                    allPendingItems = data.pendingItems;
-                    renderPendingItems();
-                }
-
-                // Feasibility Meetings (SIDEBAR)
-                if (data.meetings !== undefined) {
-                    renderMeetings(data.meetings);
-                }
-
-                // Mise à jour des alertes Overdue
-                if (data.pendingItems !== undefined) {
-                    renderOverdueAlerts(data.pendingItems);
-                }
+            // Indicateurs secondaires (SUB-STATS GRID)
+            if (data.totalCompleteData !== undefined) {
+                const el = document.getElementById('dashboardTotalComplete');
+                if (el) el.textContent = data.totalCompleteData;
+            }
+            if (data.techpacksAwaiting !== undefined) {
+                const el = document.getElementById('dashboardTechpacks');
+                if (el) el.textContent = data.techpacksAwaiting;
+            }
+            if (data.feasibilityComplete !== undefined) {
+                const el = document.getElementById('dashboardFeasibilitySub');
+                if (el) el.textContent = data.feasibilityComplete;
+            }
+            if (data.accPending !== undefined) {
+                const el = document.getElementById('dashboardAccPending');
+                if (el) el.textContent = data.accPending;
+            }
+            if (data.priPending !== undefined) {
+                const el = document.getElementById('dashboardPriPending');
+                if (el) el.textContent = data.priPending;
             }
 
-            /**
-             * Renders dynamic alerts based on overdue tasks
-             */
-            function renderOverdueAlerts(items) {
-                const container = document.getElementById('dashboardAlertsList');
-                const alertCount = document.querySelector('.bg-rose-500.text-slate-900'); // Selection the badge
-                if (!container) return;
-
-                const today = new Date();
-                today.setHours(0, 0, 0, 0);
-
-                const overdueItems = items.filter(item => {
-                    if (!item.costing_ready_date) return false;
-                    const dueDate = new Date(item.costing_ready_date);
-                    return dueDate < today;
-                });
-
-                if (alertCount) alertCount.textContent = overdueItems.length;
-
-                if (overdueItems.length === 0) {
-                    container.innerHTML = '<div class="text-[11px] text-slate-400 italic">No critical delays found.</div>';
-                    if (alertCount) alertCount.classList.add('hidden');
-                    return;
-                }
-
-                if (alertCount) alertCount.classList.remove('hidden');
-
-                let html = '';
-                overdueItems.slice(0, 5).forEach(item => {
-                    html += `
-                    <div class="border-l-4 border-rose-500 bg-rose-500/5 p-3 rounded-r cursor-pointer hover:bg-rose-500/10 transition-colors" onclick="showItemDetails('${item.c_number}')">
-                        <div class="text-xs font-bold">${item.status || 'Pending Item'}</div>
-                        <div class="text-[11px] text-slate-500 mt-1">${item.title || item.c_number} est en retard.</div>
-                    </div>
-                `;
-                });
-                container.innerHTML = html;
+            // Tableau des tâches en attente (TABLE)
+            if (data.pendingItems !== undefined) {
+                allPendingItems = data.pendingItems;
+                renderPendingItems();
             }
 
-            /**
-             * Renders the Feasibility Meetings in the sidebar (Grouped version)
-             */
-            function renderMeetings(meetings) {
-                const container = document.getElementById('dashboardMeetingsList');
-                if (!container) return;
+            // Feasibility Meetings (SIDEBAR)
+            if (data.meetings !== undefined) {
+                renderMeetings(data.meetings);
+            }
+        }
 
-                if (!meetings || meetings.length === 0) {
-                    container.innerHTML = '<div class="text-xs text-slate-400 italic py-2">No upcoming meetings.</div>';
-                    return;
-                }
+        /**
+         * Renders the Feasibility Meetings in the sidebar (Grouped version)
+         */
+        function renderMeetings(meetings) {
+            const container = document.getElementById('dashboardMeetingsList');
+            if (!container) return;
 
-                const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+            if (!meetings || meetings.length === 0) {
+                container.innerHTML = '<div class="text-xs text-slate-400 italic py-2">No upcoming meetings.</div>';
+                return;
+            }
 
-                let html = '';
-                meetings.forEach(m => {
-                    const d = new Date(m.date + 'T00:00:00');
-                    const month = monthNames[d.getMonth()];
-                    const day = d.getDate();
+            const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
 
-                    html += `
+            let html = '';
+            meetings.forEach(m => {
+                const d = new Date(m.date + 'T00:00:00'); 
+                const month = monthNames[d.getMonth()];
+                const day = d.getDate();
+
+                html += `
                     <div class="flex space-x-3 items-start group">
                         <div class="bg-blue-50 p-2 rounded text-center min-w-[50px] group-hover:bg-blue-100 transition-colors mt-0.5">
                             <div class="text-[9px] uppercase text-blue-600 font-bold">${month}</div>
@@ -681,74 +670,74 @@
                         </div>
                     </div>
                 `;
-                });
-                container.innerHTML = html;
+            });
+            container.innerHTML = html;
+        }
+
+        /**
+         * Renders the rows for the Pending Items table with Overdue detection, Sorting and Pagination
+         */
+        function renderPendingItems() {
+            const body = document.getElementById('dashboardPendingBody');
+            const stats = document.getElementById('tableStats');
+            const indicator = document.getElementById('pageIndicator');
+            const prevBtn = document.getElementById('prevPageBtn');
+            const nextBtn = document.getElementById('nextPageBtn');
+            
+            if (!body) return;
+
+            if (!allPendingItems || allPendingItems.length === 0) {
+                body.innerHTML = '<tr><td colspan="5" class="py-8 text-center text-slate-400">No pending items found.</td></tr>';
+                if (stats) stats.textContent = "Total: 0 element";
+                return;
             }
 
-            /**
-             * Renders the rows for the Pending Items table with Overdue detection, Sorting and Pagination
-             */
-            function renderPendingItems() {
-                const body = document.getElementById('dashboardPendingBody');
-                const stats = document.getElementById('tableStats');
-                const indicator = document.getElementById('pageIndicator');
-                const prevBtn = document.getElementById('prevPageBtn');
-                const nextBtn = document.getElementById('nextPageBtn');
+            // Global store for the modal to use
+            window._allPendingTasks = allPendingItems;
 
-                if (!body) return;
+            // Sorting: Closest due date first (ascending)
+            allPendingItems.sort((a, b) => {
+                const dateA = a.costing_ready_date ? new Date(a.costing_ready_date) : new Date(8640000000000000);
+                const dateB = b.costing_ready_date ? new Date(b.costing_ready_date) : new Date(8640000000000000);
+                return dateA - dateB;
+            });
 
-                if (!allPendingItems || allPendingItems.length === 0) {
-                    body.innerHTML = '<tr><td colspan="5" class="py-8 text-center text-slate-400">No pending items found.</td></tr>';
-                    if (stats) stats.textContent = "Total: 0 element";
-                    return;
+            // Pagination Logic
+            const totalItems = allPendingItems.length;
+            const totalPages = Math.ceil(totalItems / pageSize);
+            if (currentPage > totalPages) currentPage = totalPages || 1;
+            
+            const startIndex = (currentPage - 1) * pageSize;
+            const displayedItems = allPendingItems.slice(startIndex, startIndex + pageSize);
+
+            // Update UI Stats & Buttons
+            if (stats) stats.textContent = `Total: ${totalItems} element${totalItems > 1 ? 's' : ''}`;
+            if (indicator) indicator.textContent = `Page ${currentPage} of ${totalPages}`;
+            if (prevBtn) prevBtn.disabled = (currentPage <= 1);
+            if (nextBtn) nextBtn.disabled = (currentPage >= totalPages);
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            let html = '';
+            displayedItems.forEach(item => {
+                const dueDateStr = item.costing_ready_date || 'N/A';
+                const dueDate = item.costing_ready_date ? new Date(item.costing_ready_date) : null;
+                
+                let dateDisplay = dueDateStr;
+                let dateClass = "text-slate-500";
+                
+                if (dueDate && dueDate < today) {
+                    dateDisplay = `${dueDateStr} <span class="font-bold">(Overdue)</span>`;
+                    dateClass = "text-rose-500";
+                } else if (dueDate && dueDate.getTime() === today.getTime()) {
+                    dateDisplay = "Due Today";
+                    dateClass = "text-amber-500";
                 }
 
-                // Global store for the modal to use
-                window._allPendingTasks = allPendingItems;
+                const statusColorClass = getStatusColorClass(item.status);
 
-                // Sorting: Closest due date first (ascending)
-                allPendingItems.sort((a, b) => {
-                    const dateA = a.costing_ready_date ? new Date(a.costing_ready_date) : new Date(8640000000000000);
-                    const dateB = b.costing_ready_date ? new Date(b.costing_ready_date) : new Date(8640000000000000);
-                    return dateA - dateB;
-                });
-
-                // Pagination Logic
-                const totalItems = allPendingItems.length;
-                const totalPages = Math.ceil(totalItems / pageSize);
-                if (currentPage > totalPages) currentPage = totalPages || 1;
-
-                const startIndex = (currentPage - 1) * pageSize;
-                const displayedItems = allPendingItems.slice(startIndex, startIndex + pageSize);
-
-                // Update UI Stats & Buttons
-                if (stats) stats.textContent = `Total: ${totalItems} element${totalItems > 1 ? 's' : ''}`;
-                if (indicator) indicator.textContent = `Page ${currentPage} of ${totalPages}`;
-                if (prevBtn) prevBtn.disabled = (currentPage <= 1);
-                if (nextBtn) nextBtn.disabled = (currentPage >= totalPages);
-
-                const today = new Date();
-                today.setHours(0, 0, 0, 0);
-
-                let html = '';
-                displayedItems.forEach(item => {
-                    const dueDateStr = item.costing_ready_date || 'N/A';
-                    const dueDate = item.costing_ready_date ? new Date(item.costing_ready_date) : null;
-
-                    let dateDisplay = dueDateStr;
-                    let dateClass = "text-slate-500";
-
-                    if (dueDate && dueDate < today) {
-                        dateDisplay = `${dueDateStr} <span class="font-bold">(Overdue)</span>`;
-                        dateClass = "text-rose-500";
-                    } else if (dueDate && dueDate.getTime() === today.getTime()) {
-                        dateDisplay = "Due Today";
-                        dateClass = "text-amber-500";
-                    }
-
-                    const statusColorClass = getStatusColorClass(item.status);
-
-                    html += `
+                html += `
                     <tr>
                         <td class="py-4">
                             <div class="font-medium">${item.title || 'Untitled'}</div>
@@ -768,254 +757,250 @@
                         </td>
                     </tr>
                 `;
-                });
-                body.innerHTML = html;
-            }
+            });
+            body.innerHTML = html;
+        }
 
-            /**
-             * Handlers for Pagination
-             */
-            function changePage(delta) {
-                currentPage += delta;
-                renderPendingItems();
-            }
+        /**
+         * Handlers for Pagination
+         */
+        function changePage(delta) {
+            currentPage += delta;
+            renderPendingItems();
+        }
 
-            /**
-             * Returns Tailwind color classes based on status
-             */
-            function getStatusColorClass(status) {
-                const s = (status || '').trim().toLowerCase();
-                if (s.includes('pattern')) return 'bg-blue-100 text-blue-700 border border-blue-200';
-                if (s.includes('feasibility')) return 'bg-orange-100 text-orange-700 border border-orange-200';
-                if (s.includes('acc') || s.includes('mkt')) return 'bg-purple-100 text-purple-700 border border-purple-200';
-                if (s.includes('pri')) return 'bg-emerald-100 text-emerald-700 border border-emerald-200';
-                if (s.includes('techpack')) return 'bg-indigo-100 text-indigo-700 border border-indigo-200';
-                if (s.includes('meeting')) return 'bg-amber-100 text-amber-700 border border-amber-200';
-                if (s.includes('progress')) return 'bg-slate-100 text-slate-700 border border-slate-200';
-                return 'bg-slate-50 text-slate-500 border border-slate-200';
-            }
+        /**
+         * Returns Tailwind color classes based on status
+         */
+        function getStatusColorClass(status) {
+            const s = (status || '').trim().toLowerCase();
+            if (s.includes('pattern')) return 'bg-blue-100 text-blue-700 border border-blue-200';
+            if (s.includes('feasibility')) return 'bg-orange-100 text-orange-700 border border-orange-200';
+            if (s.includes('acc') || s.includes('mkt')) return 'bg-purple-100 text-purple-700 border border-purple-200';
+            if (s.includes('pri')) return 'bg-emerald-100 text-emerald-700 border border-emerald-200';
+            if (s.includes('techpack')) return 'bg-indigo-100 text-indigo-700 border border-indigo-200';
+            if (s.includes('meeting')) return 'bg-amber-100 text-amber-700 border border-amber-200';
+            if (s.includes('progress')) return 'bg-slate-100 text-slate-700 border border-slate-200';
+            return 'bg-slate-50 text-slate-500 border border-slate-200';
+        }
 
-            /**
-             * Logic for Detail Modal
-             */
-            function showItemDetails(cNumber) {
-                const task = (window._allPendingTasks || []).find(t => t.c_number === cNumber);
-                if (!task) return;
+        /**
+         * Logic for Detail Modal
+         */
+        function showItemDetails(cNumber) {
+            const task = (window._allPendingTasks || []).find(t => t.c_number === cNumber);
+            if (!task) return;
 
-                const modal = document.getElementById('detailsModal');
-                const grid = document.getElementById('modalDetailsGrid');
-                if (!modal || !grid) return;
+            const modal = document.getElementById('detailsModal');
+            const grid = document.getElementById('modalDetailsGrid');
+            if (!modal || !grid) return;
 
-                // List of fields requested by user
-                const fields = [
-                    { label: 'C-Number', key: 'c_number' },
-                    { label: 'Created', key: 'created' },
-                    { label: 'Modified', key: 'modified' },
-                    { label: 'Modified By', key: 'modified_by' },
-                    { label: 'Title', key: 'title' },
-                    { label: 'Status', key: 'status' },
-                    { label: 'Customer', key: 'customer' },
-                    { label: 'Department', key: 'customer_department' },
-                    { label: 'Sample Type', key: 'sample_type' },
-                    { label: 'TKL Season', key: 'tkl_season' },
-                    { label: 'Cust Season', key: 'customer_season' },
-                    { label: 'Main Fabric', key: 'main_fabric' },
-                    { label: 'Fabric Sup', key: 'fabric_supplier' },
-                    { label: 'Fabric Hdr', key: 'fabric_header' },
-                    { label: 'Due Date', key: 'costing_ready_date' },
-                    { label: 'Block Info', key: 'block_details' },
-                    { label: 'Created By', key: 'created_by' },
-                    { label: 'PL Name', key: 'pl_name' },
-                    { label: 'PM Name', key: 'pm_name' },
-                    { label: 'Accessory', key: 'accessory_name' },
-                    { label: 'Techpack Remarks', key: 'remarks_techpack' },
-                    { label: 'General Remarks', key: 'remarks' }
-                ];
+            // List of fields requested by user
+            const fields = [
+                { label: 'C-Number', key: 'c_number' },
+                { label: 'Created', key: 'created' },
+                { label: 'Modified', key: 'modified' },
+                { label: 'Modified By', key: 'modified_by' },
+                { label: 'Title', key: 'title' },
+                { label: 'Status', key: 'status' },
+                { label: 'Customer', key: 'customer' },
+                { label: 'Department', key: 'customer_department' },
+                { label: 'Sample Type', key: 'sample_type' },
+                { label: 'TKL Season', key: 'tkl_season' },
+                { label: 'Cust Season', key: 'customer_season' },
+                { label: 'Main Fabric', key: 'main_fabric' },
+                { label: 'Fabric Sup', key: 'fabric_supplier' },
+                { label: 'Fabric Hdr', key: 'fabric_header' },
+                { label: 'Due Date', key: 'costing_ready_date' },
+                { label: 'Block Info', key: 'block_details' },
+                { label: 'Created By', key: 'created_by' },
+                { label: 'PL Name', key: 'pl_name' },
+                { label: 'PM Name', key: 'pm_name' },
+                { label: 'Accessory', key: 'accessory_name' },
+                { label: 'Techpack Remarks', key: 'remarks_techpack' },
+                { label: 'General Remarks', key: 'remarks' }
+            ];
 
-                let html = '';
-                fields.forEach(f => {
-                    const val = task[f.key];
-
-                    // Only show fields that have a meaningful value
-                    if (val && String(val).trim() !== "" && String(val).trim() !== "-") {
-                        html += `
+            let html = '';
+            fields.forEach(f => {
+                const val = task[f.key];
+                
+                // Only show fields that have a meaningful value
+                if (val && String(val).trim() !== "" && String(val).trim() !== "-") {
+                    html += `
                         <div class="border-b border-white/10 pb-2">
                             <div class="text-[10px] text-slate-400 uppercase tracking-wider mb-1">${f.label}</div>
                             <div class="text-sm font-medium text-white break-words">${val}</div>
                         </div>
                     `;
-                    }
-                });
+                }
+            });
 
-                // Special handling for paths/links
-                if (task.attachment) {
-                    html += `
+            // Special handling for paths/links
+            if (task.attachment) {
+                 html += `
                     <div class="col-span-1 md:col-span-2 mt-4">
                         <a href="${task.attachment}" target="_blank" class="inline-flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">
                             <i class="fas fa-paperclip mr-2"></i> Open Attachment
                         </a>
                     </div>`;
-                }
-                if (task.folder_path) {
-                    html += `
+            }
+            if (task.folder_path) {
+                 html += `
                     <div class="col-span-1 md:col-span-2 mt-2">
                         <a href="${task.folder_path}" target="_blank" class="inline-flex items-center px-4 py-2 bg-slate-700 text-white rounded-lg text-sm hover:bg-slate-600 transition-colors">
                             <i class="fas fa-folder-open mr-2"></i> View Folder
                         </a>
                     </div>`;
-                }
-
-                grid.innerHTML = html;
-                modal.classList.remove('hidden');
-                modal.classList.add('flex');
             }
 
-            function closeModal() {
-                const modal = document.getElementById('detailsModal');
-                if (modal) {
-                    modal.classList.add('hidden');
-                    modal.classList.remove('flex');
-                }
+            grid.innerHTML = html;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('detailsModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
             }
+        }
 
-            /**
-             * Updates the Quota UI. 
-             * @param {number} serverUsed - Optional: The live count from the server.
-             */
-            function syncDailyQuota(serverUsed) {
-                const textEl = document.getElementById('dashboardQuotaText');
-                const barEl = document.getElementById('dashboardQuotaBar');
-                const total = 15; // Standard daily limit
+        /**
+         * Updates the Quota UI. 
+         * @param {number} serverUsed - Optional: The live count from the server.
+         */
+        function syncDailyQuota(serverUsed) {
+            const textEl = document.getElementById('dashboardQuotaText');
+            const barEl = document.getElementById('dashboardQuotaBar');
+            const total = 15; // Standard daily limit
 
-                let used = 0;
+            let used = 0;
 
-                if (serverUsed !== undefined) {
-                    // Use the fresh value from server
-                    used = serverUsed;
-                } else {
-                    // Initial load from local fallback
-                    const quotaData = localStorage.getItem('garmentcost_daily_quota');
-                    if (quotaData) {
-                        try {
-                            const parsed = JSON.parse(quotaData);
-                            const today = new Date().toISOString().split('T')[0];
-                            if (parsed.date === today) used = parsed.used;
-                        } catch (e) { }
-                    }
-                }
-
-                if (textEl) textEl.textContent = `${used} / ${total}`;
-                if (barEl) {
-                    const pct = Math.min((used / total) * 100, 100);
-                    barEl.style.width = pct + "%";
-                    if (pct >= 100) barEl.className = "bg-red-500 h-full transition-all duration-500";
-                    else if (pct >= 80) barEl.className = "bg-amber-500 h-full transition-all duration-500";
-                    else barEl.className = "bg-blue-500 h-full transition-all duration-500";
+            if (serverUsed !== undefined) {
+                // Use the fresh value from server
+                used = serverUsed;
+            } else {
+                // Initial load from local fallback
+                const quotaData = localStorage.getItem('garmentcost_daily_quota');
+                if (quotaData) {
+                    try {
+                        const parsed = JSON.parse(quotaData);
+                        const today = new Date().toISOString().split('T')[0];
+                        if (parsed.date === today) used = parsed.used;
+                    } catch (e) { }
                 }
             }
 
+            if (textEl) textEl.textContent = `${used} / ${total}`;
+            if (barEl) {
+                const pct = Math.min((used / total) * 100, 100);
+                barEl.style.width = pct + "%";
+                if (pct >= 100) barEl.className = "bg-red-500 h-full transition-all duration-500";
+                else if (pct >= 80) barEl.className = "bg-amber-500 h-full transition-all duration-500";
+                else barEl.className = "bg-blue-500 h-full transition-all duration-500";
+            }
+        }
 
-            /**
-             * Initializes the user profile dropdown with data from localStorage
-             */
-            function initProfileDropdown() {
-                console.log('Initializing Profile Popup...');
-                consumeUrlSession(); // First, check if we just arrived with new data
 
-                const avatarContainer = document.getElementById('userAvatarContainer');
-                const dropdown = document.getElementById('userDropdown');
-                const signOutBtn = document.getElementById('signOutBtn');
+        /**
+         * Initializes the user profile dropdown with data from localStorage
+         */
+        function initProfileDropdown() {
+            console.log('Initializing Profile Popup...');
+            consumeUrlSession(); // First, check if we just arrived with new data
 
-                if (!avatarContainer || !dropdown) return;
+            const REMEMBERED_USER_KEY = 'ACC_REMEMBERED_USER';
+            const avatarContainer = document.getElementById('userAvatarContainer');
+            const dropdown = document.getElementById('userDropdown');
+            const signOutBtn = document.getElementById('signOutBtn');
+            
+            if (!avatarContainer || !dropdown) return;
 
-                // Load user data
-                const storedData = localStorage.getItem(REMEMBERED_USER_KEY);
-                console.log('Data found in LocalStorage:', storedData ? 'YES' : 'NO');
-
-                const userData = JSON.parse(storedData || 'null');
-
-                if (userData) {
-                    console.log('Populating popup for:', userData.email);
-                    const name = userData.name || userData.username || userData.loginId || 'User';
-                    const email = userData.email || userData.loginId || '---';
-                    const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
-
-                    // Update Top Nav Avatar
-                    const initialsEl = document.getElementById('userAvatarInitials');
-                    const defaultIcon = document.getElementById('userAvatarDefault');
-                    if (initialsEl && defaultIcon) {
-                        initialsEl.textContent = initials;
-                        initialsEl.classList.remove('hidden');
-                        defaultIcon.classList.add('hidden');
-                    }
-
-                    // Update Dropdown Card
-                    const dAvatar = document.getElementById('dropdownAvatar');
-                    const dName = document.getElementById('dropdownName');
-                    const dEmail = document.getElementById('dropdownEmail');
-                    const dBadge = document.getElementById('dropdownBadge');
-
-                    if (dAvatar) dAvatar.textContent = initials;
-                    if (dName) dName.textContent = name;
-                    if (dEmail) dEmail.textContent = email;
-                    if (dBadge) dBadge.textContent = (userData.jobTitle || 'MEMBER').toUpperCase();
+            // Load user data
+            const storedData = localStorage.getItem(REMEMBERED_USER_KEY);
+            console.log('Data found in LocalStorage:', storedData ? 'YES' : 'NO');
+            
+            const userData = JSON.parse(storedData || 'null');
+            
+            if (userData) {
+                console.log('Populating popup for:', userData.email);
+                const name = userData.name || userData.username || userData.loginId || 'User';
+                const email = userData.email || userData.loginId || '---';
+                const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+                
+                // Update Top Nav Avatar
+                const initialsEl = document.getElementById('userAvatarInitials');
+                const defaultIcon = document.getElementById('userAvatarDefault');
+                if (initialsEl && defaultIcon) {
+                    initialsEl.textContent = initials;
+                    initialsEl.classList.remove('hidden');
+                    defaultIcon.classList.add('hidden');
                 }
-
-                // Toggle Dropdown
-                avatarContainer.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    dropdown.classList.toggle('show');
-                });
-
-                // Close on click outside
-                document.addEventListener('click', (e) => {
-                    if (!dropdown.contains(e.target) && !avatarContainer.contains(e.target)) {
-                        dropdown.classList.remove('show');
-                    }
-                });
-
-                // Sign Out logic
-                if (signOutBtn) {
-                    signOutBtn.addEventListener('click', () => {
-                        if (confirm('Are you sure you want to sign out?')) {
-                            localStorage.removeItem(REMEMBERED_USER_KEY);
-                            // Redirect to the login page (Vercel Beta)
-                            window.location.href = LOGIN_PAGE_URL;
-                        }
-                    });
-                }
+                
+                // Update Dropdown Card
+                const dAvatar = document.getElementById('dropdownAvatar');
+                const dName = document.getElementById('dropdownName');
+                const dEmail = document.getElementById('dropdownEmail');
+                const dBadge = document.getElementById('dropdownBadge');
+                
+                if (dAvatar) dAvatar.textContent = initials;
+                if (dName) dName.textContent = name;
+                if (dEmail) dEmail.textContent = email;
+                if (dBadge) dBadge.textContent = (userData.jobTitle || 'MEMBER').toUpperCase();
             }
 
-            // Initialisation
-            window.onload = function () {
-                console.log("Tableau de bord chargé.");
-                initProfileDropdown();
-                syncDailyQuota();
-                refreshDashboardData();
-
-                // Rafraîchissement périodique (30s)
-                setInterval(refreshDashboardData, 30000);
-
-                // Listen for changes in other tabs (e.g. Feasibility)
-                window.addEventListener('storage', (e) => {
-                    if (e.key === 'garmentcost_daily_quota') {
-                        try {
-                            const parsed = JSON.parse(e.newValue);
-                            syncDailyQuota(parsed.used);
-                        } catch (ex) { }
-                    }
-                });
+            // Toggle Dropdown
+            avatarContainer.addEventListener('click', (e) => {
+                e.stopPropagation();
+                dropdown.classList.toggle('show');
             });
 
-        } // Fermeture du bloc if (checkAuth())
+            // Close on click outside
+            document.addEventListener('click', (e) => {
+                if (!dropdown.contains(e.target) && !avatarContainer.contains(e.target)) {
+                    dropdown.classList.remove('show');
+                }
+            });
 
+            // Sign Out logic
+            if (signOutBtn) {
+                signOutBtn.addEventListener('click', () => {
+                    if (confirm('Are you sure you want to sign out?')) {
+                        localStorage.removeItem(REMEMBERED_USER_KEY);
+                        // Redirect to the login page (Vercel Beta)
+                        window.location.href = LOGIN_PAGE_URL;
+                    }
+                });
+            }
+        }
+
+        // Initialisation
+        window.onload = function () {
+            console.log("Tableau de bord chargé.");
+            syncDailyQuota();
+            refreshDashboardData();
+            initProfileDropdown(); // Initialize Profile
+
+            // Periodic refresh every 30 seconds for faster multi-user sync
+            setInterval(refreshDashboardData, 30000);
+
+            // Listen for changes in other tabs (e.g. Feasibility)
+            window.addEventListener('storage', (e) => {
+                if (e.key === 'garmentcost_daily_quota') {
+                    try {
+                        const parsed = JSON.parse(e.newValue);
+                        syncDailyQuota(parsed.used);
+                    } catch (ex) { }
+                }
+            });
+        }
+    };
     </script>
-
     <!-- Modal for Detailed View -->
-    <div id="detailsModal"
-        class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
-        <div
-            class="glass-card w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col bg-slate-900 border border-white/20 shadow-2xl">
+    <div id="detailsModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
+        <div class="glass-card w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col bg-slate-900 border border-white/20 shadow-2xl">
             <!-- Modal Header -->
             <div class="p-6 border-b border-white/10 flex justify-between items-center bg-white/5">
                 <h3 class="text-xl font-bold text-white flex items-center">
@@ -1025,22 +1010,21 @@
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
-
+            
             <!-- Modal Body -->
             <div id="modalDetailsGrid" class="p-6 overflow-y-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Data will be injected here -->
             </div>
-
+            
             <!-- Modal Footer -->
             <div class="p-4 border-t border-white/10 bg-white/5 text-right">
-                <button onclick="closeModal()"
-                    class="px-6 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors">
+                <button onclick="closeModal()" class="px-6 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors">
                     Close
                 </button>
             </div>
         </div>
     </div>
 
-</body>
+    <!-- Script... (remains as is) -->
 
 </html>

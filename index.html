@@ -7,6 +7,7 @@
     <title>GarmentCost - Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/feather-icons"></script>
     <style>
         :root {
             --bg-light: #f8fafc;
@@ -42,7 +43,25 @@
         }
 
         /* Profile Dropdown Styles */
-        .profile-dropdown {
+        .profile-container {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .profile-pic img {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+        }
+
+        .profile-container:hover .profile-pic img {
+            transform: scale(1.05);
+        }
+
+        .user-dropdown {
             position: absolute;
             top: calc(100% + 12px);
             right: 0;
@@ -52,7 +71,7 @@
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(226, 232, 240, 0.8);
             border-radius: 12px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
             padding: 8px;
             z-index: 1001;
             display: none;
@@ -60,7 +79,7 @@
             animation: slideInDown 0.2s ease-out;
         }
 
-        .profile-dropdown.show {
+        .user-dropdown.active {
             display: flex;
         }
 
@@ -85,43 +104,48 @@
             word-break: break-all;
         }
 
-        .profile-badge {
-            background-color: #f0f7ff;
-            color: #3b82f6;
-            font-size: 0.65rem;
-            font-weight: 800;
-            padding: 2px 8px;
-            border-radius: 4px;
-            text-transform: uppercase;
-            width: fit-content;
-            margin-top: 4px;
-        }
-
         .profile-divider {
             height: 1px;
             background-color: #f1f5f9;
             margin: 4px 0;
         }
 
-        .btn-signout {
+        .dropdown-item {
             width: 100%;
             display: flex;
             align-items: center;
             gap: 10px;
             padding: 10px 16px;
+            background: transparent;
             border: none;
             border-radius: 8px;
-            color: #ef4444;
-            font-weight: 600;
             font-size: 0.9rem;
-            transition: background 0.2s;
+            font-weight: 500;
+            color: #1e293b;
             cursor: pointer;
-            background: transparent;
+            transition: background 0.2s;
             text-align: left;
+            text-decoration: none;
         }
 
-        .btn-signout:hover {
-            background-color: #fef2f2;
+        .dropdown-item:hover {
+            background-color: #f1f5f9;
+            color: #3b82f6;
+        }
+
+        .dropdown-item i {
+            width: 16px;
+            height: 16px;
+            stroke-width: 2.5px;
+        }
+
+        .sign-out-btn {
+            color: #ef4444 !important;
+            font-weight: 600;
+        }
+
+        .sign-out-btn:hover {
+            background-color: #fef2f2 !important;
         }
 
         .btn-signout i {
@@ -175,24 +199,27 @@
                     class="bg-slate-50 border-none rounded-md py-2 pl-10 pr-4 text-sm focus:ring-1 focus:ring-blue-500 w-64">
             </div>
             <i class="far fa-bell text-slate-500 cursor-pointer"></i>
-            <div class="relative">
-                <div id="userAvatarContainer" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200 cursor-pointer hover:bg-slate-200 transition-colors">
-                    <i id="userAvatarDefault" class="far fa-user text-xs"></i>
-                    <span id="userAvatarInitials" class="hidden text-[10px] font-bold text-blue-600"></span>
+            <div class="profile-container" id="profile-trigger">
+                <div class="profile-pic">
+                    <img id="user-avatar" src="https://ui-avatars.com/api/?name=User&background=6366f1&color=fff" alt="User Profile" />
                 </div>
                 
-                <!-- Profile Dropdown -->
-                <div id="userDropdown" class="profile-dropdown">
+                <div class="user-dropdown" id="user-dropdown">
                     <div class="dropdown-header">
-                        <span id="dropdownName" class="profile-name">Guest User</span>
-                        <span id="dropdownEmail" class="profile-email">guest@example.com</span>
-                        <div id="dropdownBadge" class="profile-badge">VISITOR</div>
+                        <span class="profile-name" id="dropdown-name">Welcome</span>
+                        <span class="profile-email" id="dropdown-email">---</span>
                     </div>
+                    <div class="dropdown-divider"></div>
                     
-                    <div class="profile-divider"></div>
+                    <a href="#" onclick="redirectTo('https://costing-home.vercel.app/')" class="dropdown-item">
+                        <i data-feather="home"></i>
+                        <span>Dashboard Home</span>
+                    </a>
                     
-                    <button id="signOutBtn" class="btn-signout">
-                        <i class="fas fa-sign-out-alt"></i>
+                    <div class="dropdown-divider"></div>
+                    
+                    <button type="button" class="dropdown-item sign-out-btn" id="sign-out-btn">
+                        <i data-feather="log-out"></i>
                         <span>Sign Out</span>
                     </button>
                 </div>
@@ -882,87 +909,62 @@
         }
 
 
-        /**
-         * Initializes the user profile dropdown with data from localStorage
-         */
         function initProfileDropdown() {
             console.log('Initializing Profile Popup...');
-            consumeUrlSession(); // First, check if we just arrived with new data
+            consumeUrlSession();
 
             const REMEMBERED_USER_KEY = 'ACC_REMEMBERED_USER';
-            const avatarContainer = document.getElementById('userAvatarContainer');
-            const dropdown = document.getElementById('userDropdown');
-            const signOutBtn = document.getElementById('signOutBtn');
+            const profileTrigger = document.getElementById('profile-trigger');
+            const userDropdown = document.getElementById('user-dropdown');
+            const signOutBtn = document.getElementById('sign-out-btn');
+            const userAvatar = document.getElementById('user-avatar');
             
-            if (!avatarContainer || !dropdown) return;
+            if (!profileTrigger || !userDropdown) return;
 
-            // Load user data
             const storedData = localStorage.getItem(REMEMBERED_USER_KEY);
-            console.log('Data found in LocalStorage:', storedData ? 'YES' : 'NO');
-            
             const userData = JSON.parse(storedData || 'null');
             
             if (userData) {
-                console.log('Populating popup for:', userData.email);
                 const name = userData.username || userData.name || userData.loginId || userData.loginID || (userData.user && (userData.user.name || userData.user.username)) || 'User';
                 const email = userData.email || userData.loginId || userData.loginID || (userData.user && userData.user.email) || '---';
-                const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
                 
-                // Update Top Nav Avatar
-                const initialsEl = document.getElementById('userAvatarInitials');
-                const defaultIcon = document.getElementById('userAvatarDefault');
-                if (initialsEl && defaultIcon) {
-                    initialsEl.textContent = initials;
-                    initialsEl.classList.remove('hidden');
-                    defaultIcon.classList.add('hidden');
+                if (userAvatar) {
+                    userAvatar.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=6366f1&color=fff&bold=true`;
+                    userAvatar.alt = name;
                 }
                 
-                // Update Dropdown Card
-                const dName = document.getElementById('dropdownName');
-                const dEmail = document.getElementById('dropdownEmail');
-                const dBadge = document.getElementById('dropdownBadge');
-                
+                const dName = document.getElementById('dropdown-name');
+                const dEmail = document.getElementById('dropdown-email');
                 if (dName) dName.textContent = name;
                 if (dEmail) dEmail.textContent = email;
-                if (dBadge) dBadge.textContent = (userData.jobTitle || 'MEMBER').toUpperCase();
             }
 
-            // Toggle Dropdown
-            avatarContainer.addEventListener('click', (e) => {
+            profileTrigger.addEventListener('click', (e) => {
                 e.stopPropagation();
-                dropdown.classList.toggle('show');
+                userDropdown.classList.toggle('active');
             });
 
-            // Close on click outside
             document.addEventListener('click', (e) => {
-                if (!dropdown.contains(e.target) && !avatarContainer.contains(e.target)) {
-                    dropdown.classList.remove('show');
+                if (!profileTrigger.contains(e.target)) {
+                    userDropdown.classList.remove('active');
                 }
             });
 
-            // Sign Out logic
             if (signOutBtn) {
                 signOutBtn.addEventListener('click', () => {
-                    if (confirm('Are you sure you want to sign out?')) {
-                        localStorage.removeItem(REMEMBERED_USER_KEY);
-                        // Redirect to the login page (Vercel Beta)
-                        window.location.href = LOGIN_PAGE_URL;
-                    }
+                    localStorage.removeItem(REMEMBERED_USER_KEY);
+                    window.location.href = 'https://costing-app-beta.vercel.app/';
                 });
             }
+            if (window.feather) feather.replace();
         }
 
-        // Initialisation
         window.onload = function () {
             console.log("Tableau de bord chargé.");
             syncDailyQuota();
             refreshDashboardData();
-            initProfileDropdown(); // Initialize Profile
-
-            // Periodic refresh every 30 seconds for faster multi-user sync
+            initProfileDropdown();
             setInterval(refreshDashboardData, 30000);
-
-            // Listen for changes in other tabs (e.g. Feasibility)
             window.addEventListener('storage', (e) => {
                 if (e.key === 'garmentcost_daily_quota') {
                     try {

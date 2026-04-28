@@ -44,117 +44,88 @@
         /* Profile Dropdown Styles */
         .profile-dropdown {
             position: absolute;
-            top: calc(100% + 10px);
+            top: calc(100% + 12px);
             right: 0;
-            width: 280px;
+            width: 260px;
             background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(226, 232, 240, 0.8);
-            border-radius: 16px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            z-index: 100;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 8px;
+            z-index: 1001;
             display: none;
             flex-direction: column;
             animation: slideInDown 0.2s ease-out;
-        }
-
-        @keyframes slideInDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .profile-dropdown.show {
             display: flex;
         }
 
-        .profile-dropdown-content {
+        .dropdown-header {
+            padding: 12px 16px;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .profile-avatar-circle {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #4f46e5, #8b5cf6);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 16px;
-            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
-            overflow: hidden;
-        }
-
-        .profile-avatar-circle img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            gap: 4px;
+            text-align: left;
         }
 
         .profile-name {
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             font-weight: 700;
             color: #1e293b;
-            margin-bottom: 4px;
         }
 
         .profile-email {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
+            font-weight: 500;
             color: #64748b;
-            margin-bottom: 16px;
+            word-break: break-all;
         }
 
         .profile-badge {
             background-color: #f0f7ff;
             color: #3b82f6;
-            font-size: 0.7rem;
-            font-weight: 700;
-            padding: 6px 16px;
-            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 4px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 24px;
+            width: fit-content;
+            margin-top: 4px;
         }
 
         .profile-divider {
-            width: 100%;
             height: 1px;
             background-color: #f1f5f9;
-            margin-bottom: 20px;
+            margin: 4px 0;
         }
 
         .btn-signout {
             width: 100%;
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 10px;
-            padding: 12px;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
             color: #ef4444;
             font-weight: 600;
             font-size: 0.9rem;
-            transition: all 0.2s;
+            transition: background 0.2s;
             cursor: pointer;
-            background: white;
+            background: transparent;
+            text-align: left;
         }
 
         .btn-signout:hover {
             background-color: #fef2f2;
-            border-color: #fecaca;
-            transform: translateY(-1px);
         }
 
         .btn-signout i {
             font-size: 1rem;
-            transform: rotate(180deg);
         }
 
         ::-webkit-scrollbar {
@@ -212,19 +183,18 @@
                 
                 <!-- Profile Dropdown -->
                 <div id="userDropdown" class="profile-dropdown">
-                    <div class="profile-dropdown-content">
-                        <div id="dropdownAvatar" class="profile-avatar-circle">?</div>
-                        <div id="dropdownName" class="profile-name">Guest User</div>
-                        <div id="dropdownEmail" class="profile-email">guest@example.com</div>
+                    <div class="dropdown-header">
+                        <span id="dropdownName" class="profile-name">Guest User</span>
+                        <span id="dropdownEmail" class="profile-email">guest@example.com</span>
                         <div id="dropdownBadge" class="profile-badge">VISITOR</div>
-                        
-                        <div class="profile-divider"></div>
-                        
-                        <button id="signOutBtn" class="btn-signout">
-                            <i class="fas fa-sign-out-alt"></i>
-                            <span>Sign Out</span>
-                        </button>
                     </div>
+                    
+                    <div class="profile-divider"></div>
+                    
+                    <button id="signOutBtn" class="btn-signout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Sign Out</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -934,8 +904,8 @@
             
             if (userData) {
                 console.log('Populating popup for:', userData.email);
-                const name = userData.name || userData.username || userData.loginId || 'User';
-                const email = userData.email || userData.loginId || '---';
+                const name = userData.username || userData.name || userData.loginId || userData.loginID || (userData.user && (userData.user.name || userData.user.username)) || 'User';
+                const email = userData.email || userData.loginId || userData.loginID || (userData.user && userData.user.email) || '---';
                 const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
                 
                 // Update Top Nav Avatar
@@ -948,12 +918,10 @@
                 }
                 
                 // Update Dropdown Card
-                const dAvatar = document.getElementById('dropdownAvatar');
                 const dName = document.getElementById('dropdownName');
                 const dEmail = document.getElementById('dropdownEmail');
                 const dBadge = document.getElementById('dropdownBadge');
                 
-                if (dAvatar) dAvatar.textContent = initials;
                 if (dName) dName.textContent = name;
                 if (dEmail) dEmail.textContent = email;
                 if (dBadge) dBadge.textContent = (userData.jobTitle || 'MEMBER').toUpperCase();
